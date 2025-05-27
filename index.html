@@ -14,15 +14,23 @@
       --light-bg: #eef2f3;
     }
     * { box-sizing: border-box; }
+
+    /* ให้ body เป็น flex จัดกึ่งกลางแนวนอน และเลื่อนซ้าย-ขวาได้ */
     body {
       margin: 0; padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: auto;
       background: var(--light-bg);
       font-family: sans-serif;
       color: #333;
     }
+
     header {
       text-align: center;
       margin-bottom: 24px;
+      width: 100%;
     }
     header h1 {
       font-size: 2rem;
@@ -30,23 +38,21 @@
       color: var(--primary);
     }
 
-    /* ผังเลือกที่นั่ง */
+    /* ผังโต๊ะ: width = ขนาดเนื้อหา, จัดเป็น grid */
     .plan {
       display: grid;
+      width: max-content;
       grid-template-columns: repeat(8, var(--cell));
       grid-template-rows:
-        var(--stage-height)  /* เวที */
-        var(--spacer)        /* เว้นระยะ */
+        var(--stage-height)  /* แถวเวที */
+        var(--spacer)        /* spacer */
         repeat(19, var(--cell));
       gap: var(--gap);
-      background: #fff;
       padding: 20px;
+      background: #fff;
       border-radius: 12px;
       box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-
-      /* ทำให้เลื่อนซ้าย-ขวาได้ตรงนี้ และจัดกลาง */
-      overflow-x: auto;
-      margin: 0 auto;
+      /* ไม่มี margin:auto เพราะ body จัดกึ่งกลางให้แล้ว */
     }
 
     .stage {
@@ -105,7 +111,8 @@
       top:0; left:0; right:0; bottom:0;
       background: rgba(0,0,0,0.5);
       display: none;
-      align-items: center; justify-content: center;
+      align-items: center;
+      justify-content: center;
       z-index:1000;
     }
     #modal .content {
@@ -128,7 +135,7 @@
     }
     #modal .close:hover { color:#333; }
 
-    /* ปรับสำหรับมือถือ */
+    /* ปรับขนาดสำหรับมือถือ */
     @media (max-width: 600px) {
       :root {
         --cell: 60px;
@@ -151,24 +158,21 @@
   </header>
 
   <div class="plan">
+    <!-- เวที -->
     <div class="stage">เวที ขนาด 8×3.7 ม.</div>
 
-    <!-- โต๊ะ 1–4 -->
-    <div class="table" data-id="1"  data-header="เพื่อนเจ้าบ่าว 1" style="grid-column:2;grid-row:3;">1</div>
-    <div class="table" data-id="2"  data-header="เพื่อนเจ้าบ่าว 2" style="grid-column:2;grid-row:5;">2</div>
-    <div class="table" data-id="3"  data-header="พี่ๆ ที่ทำเสื้อ" style="grid-column:2;grid-row:7;">3</div>
-    <div class="table" data-id="4"  data-header="เพื่อนพี่ต้น" style="grid-column:2;grid-row:9;">4</div>
-
-    <!-- โต๊ะ 5–7 -->
+    <!-- โต๊ะตัวอย่าง -->
+    <div class="table" data-id="1" data-header="เพื่อนเจ้าบ่าว 1" style="grid-column:2;grid-row:3;">1</div>
+    <div class="table" data-id="2" data-header="เพื่อนเจ้าบ่าว 2" style="grid-column:2;grid-row:5;">2</div>
+    <div class="table" data-id="3" data-header="พี่ๆ ที่ทำเสื้อ" style="grid-column:2;grid-row:7;">3</div>
+    <div class="table" data-id="4" data-header="เพื่อนพี่สาว" style="grid-column:2;grid-row:9;">4</div>
     <div class="table" data-id="5" data-header="เพื่อนเซเว่น" style="grid-column:5;grid-row:3;">5</div>
     <div class="table" data-id="6" data-header="พี่ที่ทำงาน" style="grid-column:5;grid-row:5;">6</div>
-    <div class="table" data-id="7" data-header="ยังไม่มีหัวโต๊ะ" style="grid-column:5;grid-row:7;">7</div>
-
-    <!-- โต๊ะอื่นๆ… -->
-    <div class="table highlight" data-id="23" data-header="ยังไม่มีหัวโต๊ะ" style="grid-column:4;grid-row:21;">23</div>
-    <div class="table highlight" data-id="24" data-header="ยังไม่มีหัวโต๊ะ" style="grid-column:6;grid-row:21;">24</div>
+    <div class="table highlight" data-id="7" data-header="ยังไม่มีหัวโต๊ะ" style="grid-column:5;grid-row:7;">7</div>
+    <!-- … เติมโต๊ะ 8–24 ได้ตามต้องการ … -->
   </div>
 
+  <!-- Modal -->
   <div id="modal">
     <div class="content">
       <button class="close" onclick="closeModal()">✕</button>
@@ -180,27 +184,26 @@
 
   <script>
     const guestData = {
-      1: { header:"โต๊ะ เพื่อนเจ้าบ่าว 1", rows:[
+      1:{ header:"โต๊ะ เพื่อนเจ้าบ่าว 1", rows:[
           {type:"พิธี+เลี้ยง",count:2,name:"พี่อั๋ง, พี่กุน"},
           /* … */
         ]},
-      2: { header:"โต๊ะ เพื่อนเจ้าบ่าว 2", rows:[
-          /* … */
-        ]},
-      // …
+      2:{ /* … */ },
+      // … โต๊ะอื่นๆ …
     };
-    const modal      = document.getElementById('modal'),
-          titleEl    = document.getElementById('modal-title'),
-          subTitleEl = document.getElementById('modal-subtitle'),
-          listEl     = document.getElementById('modal-list');
+    const modal = document.getElementById('modal'),
+          titleEl = document.getElementById('modal-title'),
+          subEl   = document.getElementById('modal-subtitle'),
+          listEl  = document.getElementById('modal-list');
 
     document.querySelectorAll('.table').forEach(el=>{
       el.addEventListener('click',()=>{
-        const id = el.dataset.id, data = guestData[id];
-        if(!data){ alert(`ยังไม่มีข้อมูล โต๊ะ ${id}`); return; }
+        const id = el.dataset.id,
+              data = guestData[id];
+        if (!data) return alert(`ยังไม่มีข้อมูล โต๊ะ ${id}`);
         titleEl.textContent    = data.header;
-        subTitleEl.textContent = `โต๊ะ ${id}`;
-        listEl.innerHTML = '';
+        subEl.textContent      = `โต๊ะหมายเลข ${id}`;
+        listEl.innerHTML       = '';
         data.rows.forEach(r=>{
           const li = document.createElement('li');
           li.textContent = `${r.type} (${r.count} คน) — ${r.name}`;
@@ -209,9 +212,10 @@
         modal.style.display = 'flex';
       });
     });
+
     function closeModal(){ modal.style.display = 'none'; }
-    modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
-    document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&modal.style.display==='flex') closeModal(); });
+    modal.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
   </script>
 </body>
 </html>
