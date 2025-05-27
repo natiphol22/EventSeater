@@ -19,85 +19,86 @@
       background:var(--light-bg);
       font-family:sans-serif;
       color:#333;
+      overflow-x: hidden;  /* ซ่อน overflow แนวนอน */
     }
+
     .plan {
-      display:grid;
-      width:max-content;
-      overflow-x:auto;
+      display: grid;
+      /* ไม่กำหนด overflow-x อีกต่อไป */
       grid-template-columns: repeat(8, var(--cell));
       grid-template-rows:
         var(--stage-height)
         var(--spacer)
         repeat(19, var(--cell));
-      gap:var(--gap);
-      padding:16px;
-      background:#fff;
-      border-radius:8px;
-      margin:0 auto;
-      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      gap: var(--gap);
+      padding: 16px;
+      background: #fff;
+      border-radius: 8px;
+      margin: 0 auto;  /* กึ่งกลางแนวนอน */
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     .stage {
-      grid-column:1 / -1;
-      grid-row:1 / 2;
-      background:#d4efd4;
-      border:1px solid #aaa;
-      border-radius:6px;
-      display:flex; align-items:center; justify-content:center;
-      font-size:1.1rem; color:#444;
+      grid-column: 1 / -1;
+      grid-row: 1 / 2;
+      background: #d4efd4;
+      border: 1px solid #aaa;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: #444;
     }
     .table {
-      position:relative;
-      width:100%; height:100%;
-      background:#fff;
-      border:3px solid var(--primary);
-      border-radius:50%;
-      display:flex; align-items:center; justify-content:center;
-      font-size:1.2rem; font-weight:bold; color:var(--primary);
-      cursor:pointer;
+      position: relative;
+      width: 100%; height: 100%;
+      background: #fff;
+      border: 3px solid var(--primary);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; font-weight: bold; color: var(--primary);
+      cursor: pointer;
       transition: transform .2s, background .2s, color .2s;
     }
     .table:hover {
-      transform:scale(1.05);
-      background:var(--primary);
-      color:#fff;
+      transform: scale(1.05);
+      background: var(--primary);
+      color: #fff;
     }
-    /* ปรับขนาดชื่อหัวโต๊ะให้ใหญ่ขึ้น หนาขึ้น */
+    /* ชื่อหัวโต๊ะใต้เลข: ขนาดใหญ่ขึ้น */
     .table::after {
-      content:attr(data-header);
-      position:absolute;
-      bottom:-1.6em;
-      left:50%;
-      transform:translateX(-50%);
-      background:rgba(255,255,255,0.9);
-      padding:2px 8px;
-      border-radius:4px;
-      font-size:1rem;
-      font-weight:600;
-      color:#333;
-      white-space:nowrap;
-      pointer-events:none;
+      content: attr(data-header);
+      position: absolute;
+      bottom: -1.6em;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.9);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #333;
+      white-space: nowrap;
+      pointer-events: none;
     }
     .highlight {
-      background:#ffeb3b;
-      border-color:#e6c200;
-      color:#333;
+      background: #ffeb3b;
+      border-color: #e6c200;
+      color: #333;
     }
 
     #modal {
-      position:fixed;
+      position: fixed;
       top:0; left:0; right:0; bottom:0;
-      background:rgba(0,0,0,0.5);
-      display:none;
-      align-items:center; justify-content:center;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center; justify-content: center;
       z-index:1000;
     }
     #modal .content {
-      background:#fff;
-      padding:20px 24px;
-      border-radius:6px;
-      max-width:320px; width:90%;
-      box-shadow:0 2px 8px rgba(0,0,0,0.2);
-      position:relative;
+      background: #fff;
+      padding: 20px 24px;
+      border-radius: 6px;
+      max-width: 320px; width: 90%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      position: relative;
     }
     #modal h2 { margin:0 0 8px; color:var(--primary); font-size:1.2rem }
     #modal h3 { margin:0 0 12px; color:#555; font-size:1rem }
@@ -110,17 +111,19 @@
     }
     #modal .close:hover { color:#333 }
 
-    @media(max-width:600px){
+    @media (max-width:600px) {
       :root {
-        --cell:60px; --gap:8px;
-        --stage-height:120px; --spacer:12px;
+        --cell: 60px;
+        --gap: 8px;
+        --stage-height: 120px;
+        --spacer: 12px;
       }
       .table::after {
-        font-size:0.9rem;
-        bottom:-1.4em;
-        padding:1px 6px;
+        font-size: 0.9rem;
+        bottom: -1.4em;
+        padding: 1px 6px;
       }
-      #modal .content { padding:16px; }
+      #modal .content { padding: 16px; }
       #modal h2 { font-size:1.1rem; }
       #modal h3 { font-size:0.95rem; }
     }
@@ -131,23 +134,27 @@
   <div class="plan">
     <div class="stage">เวที 8×3.7 ม.</div>
 
-    <!-- ซ้าย: 1,5,2,3,4 -->
+    <!-- ซ้าย: โต๊ะ 1 -->
     <div class="table" data-id="1" data-header="เพื่อนเจ้าบ่าว 1"
          style="grid-column:2;grid-row:3">1</div>
-    <!-- ย้าย 5 ไปตรงข้าม 1-2 -->
+    <!-- ขวา: โต๊ะ 5 ตรงข้าม 1-2 -->
     <div class="table" data-id="5" data-header="เพื่อนเซเว่น"
          style="grid-column:6;grid-row:4">5</div>
+    <!-- ซ้าย: โต๊ะ 2 -->
     <div class="table" data-id="2" data-header="เพื่อนเจ้าบ่าว 2"
          style="grid-column:2;grid-row:5">2</div>
+
+    <!-- ซ้าย: โต๊ะ 3 -->
     <div class="table" data-id="3" data-header="พี่ๆ ที่ทำเสื้อ"
          style="grid-column:2;grid-row:7">3</div>
-    <!-- ย้าย 6 ให้อยู่ตรงกับ 3 -->
+    <!-- ขวา: โต๊ะ 6 ตรงกับ 3 -->
     <div class="table" data-id="6" data-header="พี่ที่ทำงาน"
          style="grid-column:6;grid-row:7">6</div>
+    <!-- ซ้าย: โต๊ะ 4 -->
     <div class="table" data-id="4" data-header="เพื่อนพี่ต้น"
          style="grid-column:2;grid-row:9">4</div>
 
-    <!-- โต๊ะ 7–22 เดิม -->
+    <!-- โต๊ะ 7–22 ตามเดิม -->
     <div class="table" data-id="7"  data-header="โต๊ะ 7"  style="grid-column:6;grid-row:9">7</div>
     <div class="table" data-id="8"  data-header="โต๊ะ 8"  style="grid-column:2;grid-row:11">8</div>
     <div class="table" data-id="9"  data-header="โต๊ะ 9"  style="grid-column:4;grid-row:11">9</div>
@@ -248,13 +255,13 @@
     });
 
     function closeModal(){
-      document.getElementById('modal').style.display = 'none';
+      modal.style.display = 'none';
     }
-    document.getElementById('modal').addEventListener('click', e=>{
-      if (e.target.id === 'modal') closeModal();
+    modal.addEventListener('click',e=>{
+      if(e.target===modal) closeModal();
     });
-    document.addEventListener('keydown', e=>{
-      if (e.key === 'Escape') closeModal();
+    document.addEventListener('keydown',e=>{
+      if(e.key==='Escape') closeModal();
     });
   </script>
 </body>
