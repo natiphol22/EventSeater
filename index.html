@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Interactive Seating Plan</title>
-  <!-- ให้ viewport ปกติ ไม่ล็อคซูม -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ล็อคซูมออก เหมือนเดิม -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     :root {
-      --cell: 100px;        /* ขนาดช่องบน desktop */
-      --gap: 12px;          /* ระยะห่าง */
-      --stage-height: 200px;/* สูงเวที */
-      --spacer: 20px;       /* เว้นระยะระหว่างเวที–โต๊ะ */
+      --cell: 100px;
+      --gap: 12px;
+      --stage-height: 200px;
+      --spacer: 20px;
       --primary: #1976d2;
     }
     * { box-sizing: border-box; margin:0; padding:0; }
@@ -22,13 +22,11 @@
       /* ซ่อน overflow แนวนอนของ body */
       overflow-x: hidden;
     }
-
-    /* Plan: กว้างเต็มเนื้อหา แต่สูงสุดไม่เกินจอ, เลื่อนซ้าย–ขวาในตัว */
     .plan {
       display: grid;
       width: max-content;
-      max-width: calc(100vw - 40px); /* ลบ padding body ซ้าย+ขวา */
-      overflow-x: auto;               /* เลื่อนแผนผังซ้าย–ขวาได้ */
+      max-width: calc(100vw - 40px); /* ลบ padding ซ้าย+ขวา */
+      overflow-x: auto;              /* เลื่อนแผนผังซ้าย–ขวาได้ */
       grid-template-columns: repeat(8, var(--cell));
       grid-template-rows:
         var(--stage-height)
@@ -41,7 +39,6 @@
       margin: 0 auto;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-
     .stage {
       grid-column: 1 / -1;
       grid-row: 1 / 2;
@@ -51,7 +48,6 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 1.1rem; color: #444;
     }
-
     .table {
       position: relative;
       width: 100%; height: 100%;
@@ -68,7 +64,6 @@
       background: var(--primary);
       color: #fff;
     }
-    /* ชื่อหัวโต๊ะใต้เลข (ใหญ่ขึ้น อ่านง่าย) */
     .table::after {
       content: attr(data-header);
       position: absolute;
@@ -89,8 +84,6 @@
       border-color: #e6c200;
       color: #333;
     }
-
-    /* Modal */
     #modal {
       position: fixed;
       top:0; left:0; right:0; bottom:0;
@@ -104,7 +97,7 @@
       padding: 20px 24px;
       border-radius: 6px;
       max-width: 320px; width: 90%;
-      max-height: 80vh;    /* ถ้ามีชื่อยาว เลื่อนใน modal */
+      max-height: 80vh;
       overflow-y: auto;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       position: relative;
@@ -120,7 +113,6 @@
     }
     #modal .close:hover { color:#333; }
 
-    /* ปรับสำหรับมือถือ */
     @media (max-width:600px) {
       :root {
         --cell: 60px;
@@ -129,13 +121,9 @@
         --spacer: 12px;
       }
       .table::after {
-        font-size:0.9rem;
-        bottom:-1.4em;
-        padding:1px 6px;
+        font-size:0.9rem; bottom:-1.4em; padding:1px 6px;
       }
-      #modal .content {
-        padding: 16px;
-      }
+      #modal .content { padding:16px; }
       #modal h2 { font-size:1.1rem; }
       #modal h3 { font-size:0.95rem; }
     }
@@ -146,27 +134,13 @@
   <div class="plan">
     <div class="stage">เวที 8×3.7 ม.</div>
 
-    <!-- ซ้าย: 1 -->
-    <div class="table" data-id="1" data-header="เพื่อนเจ้าบ่าว 1"
-         style="grid-column:2;grid-row:3">1</div>
-    <!-- ขวา: 5 -->
-    <div class="table" data-id="5" data-header="เพื่อนเซเว่น"
-         style="grid-column:6;grid-row:4">5</div>
-    <!-- ซ้าย: 2 -->
-    <div class="table" data-id="2" data-header="เพื่อนเจ้าบ่าว 2"
-         style="grid-column:2;grid-row:5">2</div>
+    <div class="table" data-id="1" data-header="เพื่อนเจ้าบ่าว 1" style="grid-column:2;grid-row:3">1</div>
+    <div class="table" data-id="5" data-header="เพื่อนเซเว่น"    style="grid-column:6;grid-row:4">5</div>
+    <div class="table" data-id="2" data-header="เพื่อนเจ้าบ่าว 2" style="grid-column:2;grid-row:5">2</div>
+    <div class="table" data-id="3" data-header="พี่ๆ ที่ทำเสื้อ"     style="grid-column:2;grid-row:7">3</div>
+    <div class="table" data-id="6" data-header="พี่ที่ทำงาน"      style="grid-column:6;grid-row:7">6</div>
+    <div class="table" data-id="4" data-header="เพื่อนพี่ต้น"      style="grid-column:2;grid-row:9">4</div>
 
-    <!-- ซ้าย: 3 -->
-    <div class="table" data-id="3" data-header="พี่ๆ ที่ทำเสื้อ"
-         style="grid-column:2;grid-row:7">3</div>
-    <!-- ขวา: 6 -->
-    <div class="table" data-id="6" data-header="พี่ที่ทำงาน"
-         style="grid-column:6;grid-row:7">6</div>
-    <!-- ซ้าย: 4 -->
-    <div class="table" data-id="4" data-header="เพื่อนพี่ต้น"
-         style="grid-column:2;grid-row:9">4</div>
-
-    <!-- 7–22 -->
     <div class="table" data-id="7"  data-header="โต๊ะ 7"  style="grid-column:6;grid-row:9">7</div>
     <div class="table" data-id="8"  data-header="โต๊ะ 8"  style="grid-column:2;grid-row:11">8</div>
     <div class="table" data-id="9"  data-header="โต๊ะ 9"  style="grid-column:4;grid-row:11">9</div>
@@ -184,11 +158,8 @@
     <div class="table" data-id="21" data-header="โต๊ะ 21" style="grid-column:4;grid-row:19">21</div>
     <div class="table" data-id="22" data-header="โต๊ะ 22" style="grid-column:6;grid-row:19">22</div>
 
-    <!-- สำรอง 23–24 -->
-    <div class="table highlight" data-id="23" data-header="โต๊ะสำรอง"
-         style="grid-column:4;grid-row:21">23</div>
-    <div class="table highlight" data-id="24" data-header="โต๊ะสำรอง"
-         style="grid-column:6;grid-row:21">24</div>
+    <div class="table highlight" data-id="23" data-header="โต๊ะสำรอง" style="grid-column:4;grid-row:21">23</div>
+    <div class="table highlight" data-id="24" data-header="โต๊ะสำรอง" style="grid-column:6;grid-row:21">24</div>
   </div>
 
   <div id="modal">
@@ -202,31 +173,31 @@
 
   <script>
     const guestData = {
-      1:{header:"เพื่อนเจ้าบ่าว 1",rows:[
+      1:{header:"เพื่อนเจ้าบ่าว 1", rows:[
         {type:"พิธี+เลี้ยง",count:2,name:"พี่ต่อ, พี่กุน"},
         {type:"พิธี+เลี้ยง",count:2,name:"บาส"},
         {type:"พิธี+เลี้ยง",count:1,name:"plng"},
         {type:"พิธี+เลี้ยง",count:1,name:"ดุ๊ก"},
         {type:"พิธี+เลี้ยง",count:1,name:"วีรพล วรรณวิริยะ ยืน"}
       ]},
-      2:{header:"เพื่อนเจ้าบ่าว 2",rows:[
+      2:{header:"เพื่อนเจ้าบ่าว 2", rows:[
         {type:"พิธี+เลี้ยง",count:2,name:"ปาล์มมี่ และ กุ๊บกิ๊บ"},
         {type:"พิธี+เลี้ยง",count:2,name:"ปอนด์"},
         {type:"พิธี+เลี้ยง",count:2,name:"ศรัณย์ คงสมสิน / กัน"},
         {type:"พิธี+เลี้ยง",count:2,name:"ต้น"}
       ]},
-      3:{header:"พี่ๆ ที่ทำเสื้อ",rows:[
+      3:{header:"พี่ๆ ที่ทำเสื้อ", rows:[
         {type:"พิธี+เลี้ยง",count:2,name:"รัชชานนท์ คิดชอบ"},
         {type:"พิธี+เลี้ยง",count:2,name:"กิตติชัย / เอ็กซ์"}
       ]},
-      4:{header:"เพื่อนพี่ต้น",rows:[
+      4:{header:"เพื่อนพี่ต้น", rows:[
         {type:"เลี้ยง",count:2,name:"ไตรเทพ หลังกลั่น / โต้ง"},
         {type:"พิธี+เลี้ยง",count:2,name:"ชินรัชต์ แซ่จิว / ฮัน"},
         {type:"เลี้ยง",count:1,name:"พันธ์ (เพื่อนต้น)"},
         {type:"พิธี+เลี้ยง",count:1,name:"ณภัทร สิงหเมธา สร"},
         {type:"พิธี+เลี้ยง",count:1,name:"มิว"}
       ]},
-      5:{header:"เพื่อนเซเว่น",rows:[
+      5:{header:"เพื่อนเซเว่น", rows:[
         {type:"พิธี+เลี้ยง",count:1,name:"พี่ออม"},
         {type:"พิธี+เลี้ยง",count:2,name:"ริว / ตั๊ก"},
         {type:"พิธี+เลี้ยง",count:1,name:"สรวีย์ร์"},
@@ -234,11 +205,11 @@
         {type:"พิธี+เลี้ยง",count:1,name:"นุ่น"},
         {type:"เลี้ยง",count:2,name:"ป็อก"}
       ]},
-      6:{header:"พี่ที่ทำงาน",rows:[
+      6:{header:"พี่ที่ทำงาน", rows:[
         {type:"พิธี+เลี้ยง",count:1,name:"พี่รอน"},
         {type:"พิธี+เลี้ยง",count:1,name:"พี่สิทธิ์"}
       ]}
-      // โต๊ะ 7–24: ไม่มีข้อมูล => alert
+      // โต๊ะ 7–24 จะ alert ว่ายังไม่มีข้อมูล
     };
 
     const modal      = document.getElementById('modal'),
@@ -248,9 +219,10 @@
 
     document.querySelectorAll('.table').forEach(el=>{
       el.addEventListener('click',()=>{
-        const id = el.dataset.id,
-              data = guestData[id];
-        if(!data){ alert(`ยังไม่มีข้อมูล โต๊ะ ${id}`); return; }
+        const id = el.dataset.id, data = guestData[id];
+        if(!data){
+          alert(`ยังไม่มีข้อมูล โต๊ะ ${id}`); return;
+        }
         document.body.style.overflow = 'hidden';
         titleEl.textContent    = data.header;
         subEl.textContent      = `โต๊ะ ${id}`;
