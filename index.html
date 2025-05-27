@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Interactive Seating Plan</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <!-- ปิดการซูมเพื่อให้หน้าเว็บแสดงเต็ม ไม่ต้องซูมออก -->
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <style>
     :root {
       --cell: 100px;
@@ -16,10 +17,10 @@
     body {
       margin: 0;
       padding: 20px;
-      /* ตัดพื้นหลังสีออก */
       background: none;
       font-family: sans-serif;
       color: #333;
+      /* ซ่อน overflow แนวนอน ให้เลื่อนแค่ขึ้น–ลง */
       overflow-x: hidden;
     }
     .plan {
@@ -32,7 +33,6 @@
         repeat(19, var(--cell));
       gap: var(--gap);
       padding: 16px;
-      /* ตัดพื้นหลังสีออก */
       background: transparent;
       border-radius: 8px;
       margin: 0 auto;
@@ -44,25 +44,17 @@
       background: #d4efd4;
       border: 1px solid #aaa;
       border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      color: #444;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: #444;
     }
     .table {
       position: relative;
       width: 100%; height: 100%;
-      /* ให้โต๊ะยังคงพื้นหลังขาวเพื่อความคมชัด */
       background: #fff;
       border: 3px solid var(--primary);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; font-weight: bold; color: var(--primary);
       cursor: pointer;
       transition: transform .2s, background .2s, color .2s;
     }
@@ -71,7 +63,6 @@
       background: var(--primary);
       color: #fff;
     }
-    /* ชื่อหัวโต๊ะใต้เลข: ขนาดใหญ่ขึ้น */
     .table::after {
       content: attr(data-header);
       position: absolute;
@@ -98,8 +89,7 @@
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.5);
       display: none;
-      align-items: center;
-      justify-content: center;
+      align-items: center; justify-content: center;
       z-index: 1000;
     }
     #modal .content {
@@ -109,17 +99,19 @@
       max-width: 320px; width: 90%;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       position: relative;
+      max-height: 80vh;         /* ป้องกัน modal ยาวเกินจอ */
+      overflow-y: auto;         /* ถ้ามีชื่อเยอะก็เลื่อนใน modal แทน */
     }
-    #modal h2 { margin: 0 0 8px; color: var(--primary); font-size: 1.2rem; }
-    #modal h3 { margin: 0 0 12px; color: #555; font-size: 1rem; }
-    #modal ul { padding-left: 1.2em; margin: 0; }
-    #modal li { margin-bottom: 6px; line-height: 1.3; font-size: 0.9rem; }
+    #modal h2 { margin: 0 0 8px; color: var(--primary); font-size: 1.2rem }
+    #modal h3 { margin: 0 0 12px; color: #555; font-size: 1rem }
+    #modal ul { padding-left: 1.2em; margin: 0 }
+    #modal li { margin-bottom: 6px; line-height: 1.3; font-size: 0.9rem }
     #modal .close {
       position: absolute; top: 8px; right: 8px;
       background: none; border: none; font-size: 1.2rem;
       cursor: pointer; color: #888;
     }
-    #modal .close:hover { color: #333; }
+    #modal .close:hover { color: #333 }
 
     @media (max-width:600px) {
       :root {
@@ -133,7 +125,9 @@
         bottom: -1.4em;
         padding: 1px 6px;
       }
-      #modal .content { padding: 16px; }
+      #modal .content {
+        padding: 16px;
+      }
       #modal h2 { font-size: 1.1rem; }
       #modal h3 { font-size: 0.95rem; }
     }
@@ -164,7 +158,7 @@
     <div class="table" data-id="4" data-header="เพื่อนพี่ต้น"
          style="grid-column:2;grid-row:9">4</div>
 
-    <!-- โต๊ะ 7–22 ตามเดิม -->
+    <!-- โต๊ะ 7–22 -->
     <div class="table" data-id="7"  data-header="โต๊ะ 7"  style="grid-column:6;grid-row:9">7</div>
     <div class="table" data-id="8"  data-header="โต๊ะ 8"  style="grid-column:2;grid-row:11">8</div>
     <div class="table" data-id="9"  data-header="โต๊ะ 9"  style="grid-column:4;grid-row:11">9</div>
@@ -244,18 +238,20 @@
           subTitleEl = document.getElementById('modal-subtitle'),
           listEl     = document.getElementById('modal-list');
 
-    document.querySelectorAll('.table').forEach(el=>{
-      el.addEventListener('click',()=>{
+    document.querySelectorAll('.table').forEach(el => {
+      el.addEventListener('click', () => {
         const id = el.dataset.id;
         const data = guestData[id];
         if (!data) {
           alert(`ยังไม่มีข้อมูล โต๊ะ ${id}`);
           return;
         }
+        // ปิด scroll แผ่นหลังไม่ให้เลื่อน
+        document.body.style.overflow = 'hidden';
         titleEl.textContent    = data.header;
         subTitleEl.textContent = `โต๊ะหมายเลข ${id}`;
         listEl.innerHTML = "";
-        data.rows.forEach(r=>{
+        data.rows.forEach(r => {
           const li = document.createElement('li');
           li.textContent = `${r.type} (${r.count} คน) — ${r.name}`;
           listEl.appendChild(li);
@@ -264,13 +260,15 @@
       });
     });
 
-    function closeModal(){
-      document.getElementById('modal').style.display = 'none';
+    function closeModal() {
+      modal.style.display = 'none';
+      // เปิด scroll หลัง modal ปิด
+      document.body.style.overflow = '';
     }
-    document.getElementById('modal').addEventListener('click', e=>{
-      if (e.target.id === 'modal') closeModal();
+    modal.addEventListener('click', e => {
+      if (e.target === modal) closeModal();
     });
-    document.addEventListener('keydown', e=>{
+    document.addEventListener('keydown', e => {
       if (e.key === 'Escape') closeModal();
     });
   </script>
