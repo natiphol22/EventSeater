@@ -12,6 +12,7 @@
       --stage-height: 200px;
       --spacer: 20px;
       --primary: #1976d2;
+      --pink: #e91e63;
     }
     * { box-sizing: border-box; }
     body {
@@ -20,7 +21,6 @@
       background: none;
       font-family: sans-serif;
       color: #333;
-      /* ซ่อน overflow แนวนอน ให้เลื่อนแค่ขึ้น–ลง */
       overflow-x: hidden;
     }
     .plan {
@@ -63,6 +63,16 @@
       background: var(--primary);
       color: #fff;
     }
+    /* กำหนดสไตล์สำหรับโต๊ะสีชมพู */
+    .table.pink {
+      border-color: var(--pink);
+      color: var(--pink);
+    }
+    .table.pink:hover {
+      transform: scale(1.05);
+      background: var(--pink);
+      color: #fff;
+    }
     .table::after {
       content: attr(data-header);
       position: absolute;
@@ -84,6 +94,7 @@
       color: #333;
     }
 
+    /* Modal */
     #modal {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -99,8 +110,8 @@
       max-width: 320px; width: 90%;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       position: relative;
-      max-height: 80vh;         /* ป้องกัน modal ยาวเกินจอ */
-      overflow-y: auto;         /* ถ้ามีชื่อเยอะก็เลื่อนใน modal แทน */
+      max-height: 80vh;
+      overflow-y: auto;
     }
     #modal h2 { margin: 0 0 8px; color: var(--primary); font-size: 1.2rem }
     #modal h3 { margin: 0 0 12px; color: #555; font-size: 1rem }
@@ -138,42 +149,42 @@
   <div class="plan">
     <div class="stage">เวที 8×3.7 ม.</div>
 
-    <!-- ซ้าย: โต๊ะ 1 -->
-    <div class="table" data-id="1" data-header="เพื่อนเจ้าบ่าว 1"
+    <!-- ซ้าย: โต๊ะ 1 (ชมพู) -->
+    <div class="table pink" data-id="1" data-header="เพื่อนเจ้าบ่าว 1"
          style="grid-column:2;grid-row:3">1</div>
-    <!-- ขวา: โต๊ะ 5 ตรงข้าม 1-2 -->
+    <!-- ขวา: โต๊ะ 5 (เดิม) -->
     <div class="table" data-id="5" data-header="เพื่อนเซเว่น"
          style="grid-column:6;grid-row:4">5</div>
-    <!-- ซ้าย: โต๊ะ 2 -->
-    <div class="table" data-id="2" data-header="เพื่อนเจ้าบ่าว 2"
+    <!-- ซ้าย: โต๊ะ 2 (ชมพู) -->
+    <div class="table pink" data-id="2" data-header="เพื่อนเจ้าบ่าว 2"
          style="grid-column:2;grid-row:5">2</div>
 
-    <!-- ซ้าย: โต๊ะ 3 -->
-    <div class="table" data-id="3" data-header="พี่ๆ ที่ทำเสื้อ"
+    <!-- ซ้าย: โต๊ะ 3 (ชมพู) -->
+    <div class="table pink" data-id="3" data-header="พี่ๆ ที่ทำเสื้อ"
          style="grid-column:2;grid-row:7">3</div>
-    <!-- ขวา: โต๊ะ 6 ตรงกับ 3 -->
+    <!-- ขวา: โต๊ะ 6 (เดิม) -->
     <div class="table" data-id="6" data-header="พี่ที่ทำงาน"
          style="grid-column:6;grid-row:7">6</div>
-    <!-- ซ้าย: โต๊ะ 4 -->
-    <div class="table" data-id="4" data-header="เพื่อนพี่ต้น"
+    <!-- ซ้าย: โต๊ะ 4 (ชมพู) -->
+    <div class="table pink" data-id="4" data-header="เพื่อนพี่ต้น"
          style="grid-column:2;grid-row:9">4</div>
 
     <!-- โต๊ะ 7–22 -->
     <div class="table" data-id="7"  data-header="โต๊ะ 7"  style="grid-column:6;grid-row:9">7</div>
-    <div class="table" data-id="8"  data-header="โต๊ะ 8"  style="grid-column:2;grid-row:11">8</div>
+    <div class="table pink" data-id="8"  data-header="โต๊ะ 8"  style="grid-column:2;grid-row:11">8</div>
     <div class="table" data-id="9"  data-header="โต๊ะ 9"  style="grid-column:4;grid-row:11">9</div>
     <div class="table" data-id="10" data-header="โต๊ะ 10" style="grid-column:6;grid-row:11">10</div>
-    <div class="table" data-id="11" data-header="โต๊ะ 11" style="grid-column:2;grid-row:13">11</div>
+    <div class="table pink" data-id="11" data-header="โต๊ะ 11" style="grid-column:2;grid-row:13">11</div>
     <div class="table" data-id="12" data-header="โต๊ะ 12" style="grid-column:4;grid-row:13">12</div>
     <div class="table" data-id="13" data-header="โต๊ะ 13" style="grid-column:6;grid-row:13">13</div>
-    <div class="table" data-id="14" data-header="โต๊ะ 14" style="grid-column:2;grid-row:15">14</div>
+    <div class="table pink" data-id="14" data-header="โต๊ะ 14" style="grid-column:2;grid-row:15">14</div>
     <div class="table" data-id="15" data-header="โต๊ะ 15" style="grid-column:4;grid-row:15">15</div>
     <div class="table" data-id="16" data-header="โต๊ะ 16" style="grid-column:6;grid-row:15">16</div>
-    <div class="table" data-id="17" data-header="โต๊ะ 17" style="grid-column:2;grid-row:17">17</div>
-    <div class="table" data-id="18" data-header="โต๊ะ 18" style="grid-column:4;grid-row:17">18</div>
+    <div class="table pink" data-id="17" data-header="โต๊ะ 17" style="grid-column:2;grid-row:17">17</div>
+    <div class="table pink" data-id="18" data-header="โต๊ะ 18" style="grid-column:4;grid-row:17">18</div>
     <div class="table" data-id="19" data-header="โต๊ะ 19" style="grid-column:6;grid-row:17">19</div>
-    <div class="table" data-id="20" data-header="โต๊ะ 20" style="grid-column:2;grid-row:19">20</div>
-    <div class="table" data-id="21" data-header="โต๊ะ 21" style="grid-column:4;grid-row:19">21</div>
+    <div class="table pink" data-id="20" data-header="โต๊ะ 20" style="grid-column:2;grid-row:19">20</div>
+    <div class="table pink" data-id="21" data-header="โต๊ะ 21" style="grid-column:4;grid-row:19">21</div>
     <div class="table" data-id="22" data-header="โต๊ะ 22" style="grid-column:6;grid-row:19">22</div>
 
     <!-- โต๊ะสำรอง 23–24 -->
@@ -183,6 +194,7 @@
          style="grid-column:6;grid-row:21">24</div>
   </div>
 
+  <!-- Modal -->
   <div id="modal">
     <div class="content">
       <button class="close" onclick="closeModal()">✕</button>
@@ -246,7 +258,6 @@
           alert(`ยังไม่มีข้อมูล โต๊ะ ${id}`);
           return;
         }
-        // ปิด scroll แผ่นหลังไม่ให้เลื่อน
         document.body.style.overflow = 'hidden';
         titleEl.textContent    = data.header;
         subTitleEl.textContent = `โต๊ะหมายเลข ${id}`;
@@ -262,7 +273,6 @@
 
     function closeModal() {
       modal.style.display = 'none';
-      // เปิด scroll หลัง modal ปิด
       document.body.style.overflow = '';
     }
     modal.addEventListener('click', e => {
