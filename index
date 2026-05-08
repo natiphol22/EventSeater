@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Company Portal Test Login</title>
+</head>
+
+<body>
+
+  <h2>Company Portal Login Test</h2>
+
+  <input
+    type="text"
+    id="username"
+    placeholder="Username"
+  >
+
+  <br><br>
+
+  <input
+    type="password"
+    id="password"
+    placeholder="Password"
+  >
+
+  <br><br>
+
+  <button onclick="login()">
+    Login
+  </button>
+
+  <h3>Result</h3>
+
+  <pre id="result"></pre>
+
+<script>
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbx_ANVi_o-r3uTNxOAy14Sz7iNH-Q7VghmT94IkyNDBAWKGudvkFXQOWsrlxgxSDi9LmQ/exec";
+
+async function login(){
+
+  const username =
+    document.getElementById("username").value;
+
+  const password =
+    document.getElementById("password").value;
+
+  try{
+
+    const response = await fetch(API_URL,{
+
+      method:"POST",
+
+      body: JSON.stringify({
+        action:"login",
+        username: username,
+        password: password
+      })
+
+    });
+
+    const data = await response.json();
+
+    console.log(data);
+
+    // แสดงผล
+    document.getElementById("result")
+      .innerText = JSON.stringify(data,null,2);
+
+    // เก็บ session
+    if(data.success){
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(data.user)
+      );
+
+      alert("Login Success");
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    document.getElementById("result")
+      .innerText = error;
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
