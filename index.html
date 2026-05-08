@@ -3,99 +3,147 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Elite Login Portal</title>
+  <title>Executive Login | Secure Access</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     body { 
       font-family: 'Inter', 'Kanit', sans-serif;
-      background-color: #FBFBFD; /* Apple White */
+      background-color: #F8F9FB;
       display: flex; align-items: center; justify-content: center; min-height: 100vh;
     }
     
-    /* ดีไซน์เน้นความบาลานซ์ */
     .auth-card {
-      background: white;
-      padding: 3.5rem 3rem;
-      border-radius: 40px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.04);
-      width: 100%; max-width: 420px;
-      transition: all 0.3s ease;
+      background: #FFFFFF;
+      padding: 3.5rem 2.8rem;
+      border-radius: 36px;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.03);
+      width: 100%; max-width: 410px;
+      position: relative;
     }
 
-    .input-box {
-      height: 56px;
-      background: #F5F5F7;
+    .input-wrapper {
+      position: relative;
+      margin-bottom: 1.2rem;
+    }
+
+    .input-field {
+      height: 58px;
+      width: 100%;
+      background: #F2F2F7;
       border: 1.5px solid transparent;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .input-box:focus {
-      background: white;
-      border-color: #0071E3;
-      box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.1);
+      border-radius: 18px;
+      padding: 0 1.5rem;
+      transition: all 0.2s ease;
+      outline: none;
     }
 
-    .btn-submit {
-      height: 56px;
+    .input-field:focus {
+      background: #FFFFFF;
+      border-color: #007AFF;
+      box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+    }
+
+    .show-password-btn {
+      position: absolute;
+      right: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #A1A1A6;
+      cursor: pointer;
+      padding: 5px;
+      transition: color 0.3s;
+    }
+    .show-password-btn:hover { color: #1D1D1F; }
+
+    .btn-primary {
+      height: 58px;
+      width: 100%;
       background: #1D1D1F;
-      color: white;
+      color: #FFF;
       border-radius: 18px;
       font-weight: 500;
+      letter-spacing: 0.02em;
       transition: all 0.3s ease;
+      margin-top: 1.5rem;
     }
-    .btn-submit:hover:not(:disabled) { background: #000; transform: translateY(-1px); }
-    .btn-submit:active { transform: scale(0.98); }
+    .btn-primary:hover:not(:disabled) { background: #000; transform: translateY(-1px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    .btn-primary:active { transform: scale(0.98); }
 
-    /* Custom Loading */
-    .loader-spin {
-      width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,0.3);
-      border-top-color: white; border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+    .loader-dots {
+      display: flex; gap: 4px;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .dot { width: 6px; height: 6px; background: white; border-radius: 50%; animation: blink 1s infinite alternate; }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink { from { opacity: 0.2; } to { opacity: 1; } }
   </style>
 </head>
 <body>
 
-  <div class="auth-card">
-    <div class="text-center mb-12">
-      <img src="LOGO.png" alt="Logo" class="h-14 mx-auto mb-6 object-contain" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block';">
-      <h1 id="alt-logo" class="hidden text-2xl font-bold mb-2">CubicPlus</h1>
-      <h2 class="text-[22px] font-semibold text-[#1D1D1F] tracking-tight">เข้าสู่ระบบ</h2>
-      <p class="text-[#86868B] text-sm mt-2">โปรดระบุบัญชีผู้ใช้ของคุณ</p>
+  <div class="auth-card animate-in fade-in zoom-in duration-700">
+    <div class="text-center mb-10">
+      <div class="mb-6 h-16 flex items-center justify-center">
+        <img src="LOGO.png" alt="Logo" class="h-full object-contain" onerror="this.style.display='none'; document.getElementById('alt-brand').style.display='block';">
+        <h1 id="alt-brand" class="hidden text-2xl font-bold tracking-tighter italic">CUBICPLUS</h1>
+      </div>
+      <h2 class="text-2xl font-semibold text-[#1D1D1F]">เข้าสู่ระบบ</h2>
+      <p class="text-[#86868B] text-[13px] mt-2 font-light">Secure Portal Access Control</p>
     </div>
 
-    <div class="space-y-4">
-      <input type="text" id="username" 
-             class="input-box w-full px-6 rounded-2xl outline-none placeholder:text-gray-400" 
-             placeholder="ชื่อผู้ใช้งาน"
-             onkeypress="checkEnter(event)">
-      
-      <input type="password" id="password" 
-             class="input-box w-full px-6 rounded-2xl outline-none placeholder:text-gray-400" 
-             placeholder="รหัสผ่าน"
-             onkeypress="checkEnter(event)">
+    <div>
+      <div class="input-wrapper">
+        <input type="text" id="username" class="input-field" placeholder="ชื่อผู้ใช้งาน" onkeypress="checkEnter(event)">
+      </div>
 
-      <button onclick="handleLogin()" id="loginBtn" class="btn-submit w-full flex items-center justify-center mt-8">
+      <div class="input-wrapper">
+        <input type="password" id="password" class="input-field" placeholder="รหัสผ่าน" onkeypress="checkEnter(event)">
+        <span class="show-password-btn" onclick="togglePassword()">
+          <i id="eye-icon" class="fa-regular fa-eye"></i>
+        </span>
+      </div>
+
+      <button onclick="handleLogin()" id="loginBtn" class="btn-primary flex items-center justify-center">
         <span id="btnText">ดำเนินการต่อ</span>
-        <div id="loader" class="hidden"><div class="loader-spin"></div></div>
+        <div id="loader" class="hidden loader-dots">
+          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
       </button>
     </div>
 
-    <div id="message" class="mt-8 text-center text-sm font-medium min-h-[20px] transition-all"></div>
-    
-    <p class="mt-12 text-center text-[11px] text-gray-300 font-medium tracking-widest uppercase">Internal Portal v2.0</p>
+    <div id="message" class="mt-6 text-center text-[13px] font-medium min-h-[20px]"></div>
+
+    <div class="mt-10 pt-6 border-t border-gray-50 text-center">
+      <p class="text-gray-400 text-xs">พบปัญหาในการเข้าใช้งาน?</p>
+      <a href="https://line.me/ti/p/@yourid" target="_blank" class="mt-2 inline-flex items-center gap-1.5 text-blue-500 font-medium text-[13px] hover:underline">
+        <i class="fa-regular fa-comment-dots"></i>
+        ติดต่อผู้ดูแลระบบ
+      </a>
+    </div>
+
+    <p class="mt-8 text-center text-[10px] text-gray-300 font-medium tracking-[0.2em] uppercase">Enterprise Security Standard</p>
   </div>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbx_ANVi_o-r3uTNxOAy14Sz7iNH-Q7VghmT94IkyNDBAWKGudvkFXQOWsrlxgxSDi9LmQ/exec";
 
-// 1. ฟังก์ชันดักปุ่ม Enter (กดที่ไหนก็ได้ในช่อง Input)
-function checkEnter(event) {
-    if (event.key === "Enter") {
-        handleLogin();
+// 1. ฟังก์ชันกดดูรหัสผ่าน
+function togglePassword() {
+    const pwdInput = document.getElementById("password");
+    const icon = document.getElementById("eye-icon");
+    if (pwdInput.type === "password") {
+        pwdInput.type = "text";
+        icon.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+        pwdInput.type = "password";
+        icon.classList.replace("fa-eye-slash", "fa-eye");
     }
+}
+
+// 2. ฟังก์ชันกด Enter
+function checkEnter(e) {
+    if (e.key === "Enter") handleLogin();
 }
 
 async function handleLogin() {
@@ -106,11 +154,10 @@ async function handleLogin() {
     const loader = document.getElementById("loader");
 
     if (!user || !pass) {
-        showMsg("กรุณากรอกข้อมูลให้ครบถ้วน", "text-red-500");
+        showMsg("กรุณากรอกข้อมูลให้ครบถ้วน", "text-rose-500");
         return;
     }
 
-    // Start Loading State
     btn.disabled = true;
     text.classList.add("hidden");
     loader.classList.remove("hidden");
@@ -124,15 +171,15 @@ async function handleLogin() {
         const data = await response.json();
 
         if (data.success) {
-            showMsg("เข้าสู่ระบบสำเร็จ", "text-green-600");
+            showMsg("สำเร็จ! กำลังเข้าสู่ระบบ", "text-green-600");
             localStorage.setItem("user", JSON.stringify(data.user));
             setTimeout(() => { window.location.href = "dashboard.html"; }, 800);
         } else {
-            showMsg(data.message || "บัญชีหรือรหัสผ่านไม่ถูกต้อง", "text-red-500");
+            showMsg(data.message || "ข้อมูลไม่ถูกต้อง", "text-rose-500");
             resetBtn();
         }
     } catch (e) {
-        showMsg("ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้", "text-red-500");
+        showMsg("เชื่อมต่อไม่สำเร็จ กรุณาลองใหม่", "text-rose-500");
         resetBtn();
     }
 }
@@ -140,7 +187,7 @@ async function handleLogin() {
 function showMsg(m, c) {
     const el = document.getElementById("message");
     el.innerText = m;
-    el.className = `mt-8 text-center text-sm font-medium ${c}`;
+    el.className = `mt-6 text-center text-[13px] font-medium ${c}`;
 }
 
 function resetBtn() {
