@@ -3,41 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Company Portal | Login</title>
+  <title>Company Portal | Luxury Login</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Kanit', sans-serif; }
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+  </style>
 </head>
 
-<body class="bg-gray-100 h-screen flex items-center justify-center">
+<body class="gradient-bg h-screen flex items-center justify-center p-4">
 
-  <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+  <div class="glass-effect p-10 rounded-3xl shadow-2xl w-full max-w-md transform transition-all hover:scale-[1.01]">
+    
     <div class="text-center mb-8">
-      <h2 class="text-3xl font-bold text-gray-800">Company Portal</h2>
-      <p class="text-gray-500">กรุณาเข้าสู่ระบบเพื่อใช้งาน</p>
+      <div class="inline-block p-4 rounded-2xl bg-gray-50 mb-4 shadow-inner">
+        <img src="LOGO.png" alt="Company Logo" class="h-16 w-auto object-contain" onerror="this.src='https://via.placeholder.com/150?text=LOGO'">
+      </div>
+      <h2 class="text-3xl font-extrabold text-gray-800 tracking-tight">ยินดีต้อนรับ</h2>
+      <p class="text-gray-500 mt-2">เข้าสู่ระบบจัดการข้อมูลองค์กร</p>
     </div>
 
-    <div class="space-y-4">
+    <div class="space-y-6">
       <div>
-        <label class="block text-sm font-medium text-gray-700">Username</label>
-        <input type="text" id="username" 
-               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
-               placeholder="กรอกชื่อผู้ใช้งาน">
+        <label class="block text-sm font-semibold text-gray-700 ml-1 mb-1">ชื่อผู้ใช้งาน</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+            <i class="fas fa-user text-sm"></i>
+          </span>
+          <input type="text" id="username" 
+                 class="block w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none" 
+                 placeholder="Username">
+        </div>
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-gray-700">Password</label>
-        <input type="password" id="password" 
-               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
-               placeholder="••••••••">
+        <label class="block text-sm font-semibold text-gray-700 ml-1 mb-1">รหัสผ่าน</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+            <i class="fas fa-lock text-sm"></i>
+          </span>
+          <input type="password" id="password" 
+                 class="block w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none" 
+                 placeholder="••••••••">
+        </div>
       </div>
 
       <button onclick="handleLogin()" id="loginBtn"
-              class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200 flex items-center justify-center">
+              class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3.5 rounded-xl hover:from-purple-700 hover:to-indigo-700 shadow-lg hover:shadow-purple-200 transition-all duration-300 flex items-center justify-center">
         <span>เข้าสู่ระบบ</span>
       </button>
     </div>
 
-    <div id="message" class="mt-4 text-center text-sm font-medium min-h-[20px]"></div>
+    <div id="message" class="mt-6 text-center text-sm font-medium min-h-[20px]"></div>
+
+    <div class="mt-8 text-center">
+      <p class="text-xs text-gray-400 font-light">© 2024 Your Company. All rights reserved.</p>
+    </div>
   </div>
 
 <script>
@@ -45,11 +75,10 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbyox7sbT1YvUrH9aG5ioC2A2Xf-r2w3ap0LGReG_FzZpBLOdSjIMY4EJlzgYWc-LCXg/exec";
 
 // --- Session Check ---
-if (localStorage.getItem("user")) {
+if (localStorage.getItem("user")) { [cite: 3]
     window.location.href = "dashboard.html";
 }
 
-// --- Functions ---
 async function handleLogin() {
     const usernameInput = document.getElementById("username");
     const passwordInput = document.getElementById("password");
@@ -60,16 +89,13 @@ async function handleLogin() {
     const password = passwordInput.value.trim();
 
     if (!username || !password) {
-        showMessage("กรุณากรอกข้อมูลให้ครบถ้วน", "text-red-500");
+        showMessage("กรุณากรอกข้อมูลให้ครบถ้วน", "text-red-500 bg-red-50 p-2 rounded-lg");
         return;
     }
 
-    // Set Loading State
     toggleLoading(true);
 
     try {
-        // ใช้ URLSearchParams หรือส่งเป็น Object ปกติแต่ต้องระวังเรื่อง CORS 
-        // Google Apps Script รับ POST แบบ Content-Type text/plain จะเลี่ยงปัญหา CORS ได้ง่ายกว่าในบางกรณี
         const response = await fetch(API_URL, {
             method: "POST",
             body: JSON.stringify({
@@ -82,44 +108,43 @@ async function handleLogin() {
         const data = await response.json();
 
         if (data.success) {
-            showMessage("เข้าสู่ระบบสำเร็จ! กำลังเปลี่ยนหน้า...", "text-green-500");
+            showMessage("ยืนยันตัวตนสำเร็จ! กำลังเข้าสู่ระบบ...", "text-green-600 bg-green-50 p-2 rounded-lg");
             localStorage.setItem("user", JSON.stringify(data.user));
             
             setTimeout(() => {
                 window.location.href = "dashboard.html";
-            }, 1000);
+            }, 1200);
         } else {
-            showMessage(data.message || "Username หรือ Password ไม่ถูกต้อง", "text-red-500");
+            showMessage(data.message || "ไม่พบชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง", "text-red-500 bg-red-50 p-2 rounded-lg");
             toggleLoading(false);
         }
 
     } catch (error) {
         console.error("Login Error:", error);
-        showMessage("เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์", "text-red-500");
+        showMessage("ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ในขณะนี้", "text-red-500 bg-red-50 p-2 rounded-lg");
         toggleLoading(false);
     }
 }
 
-function showMessage(text, colorClass) {
+function showMessage(text, classes) {
     const messageEl = document.getElementById("message");
     messageEl.innerText = text;
-    messageEl.className = `mt-4 text-center text-sm font-medium ${colorClass}`;
+    messageEl.className = `mt-6 text-center text-sm font-medium ${classes}`;
 }
 
 function toggleLoading(isLoading) {
     const btn = document.getElementById("loginBtn");
     if (isLoading) {
-        btn.disabled = true;
-        btn.innerHTML = `<i class="fas fa-circle-notch animate-spin mr-2"></i> กำลังตรวจสอบ...`;
-        btn.classList.add("opacity-70", "cursor-not-allowed");
+        btn.disabled = true; [cite: 3]
+        btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> กำลังตรวจสอบสิทธิ์...`; [cite: 2]
+        btn.classList.add("opacity-80", "cursor-not-allowed");
     } else {
         btn.disabled = false;
         btn.innerHTML = `<span>เข้าสู่ระบบ</span>`;
-        btn.classList.remove("opacity-70", "cursor-not-allowed");
+        btn.classList.remove("opacity-80", "cursor-not-allowed");
     }
 }
 
-// กด Enter เพื่อ Login
 document.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') handleLogin();
 });
