@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>Company Portal Test Login</title>
+  <title>Company Portal Login</title>
 </head>
 
 <body>
 
-  <h2>Company Portal Login Test</h2>
+  <h2>Company Portal Login</h2>
 
   <input
     type="text"
@@ -37,6 +37,16 @@
 
 <script>
 
+// ถ้า login อยู่แล้ว ให้เข้า dashboard เลย
+const currentUser =
+  localStorage.getItem("user");
+
+if(currentUser){
+
+  window.location.href = "dashboard.html";
+
+}
+
 const API_URL =
 "https://script.google.com/macros/s/AKfycbx_ANVi_o-r3uTNxOAy14Sz7iNH-Q7VghmT94IkyNDBAWKGudvkFXQOWsrlxgxSDi9LmQ/exec";
 
@@ -47,6 +57,16 @@ async function login(){
 
   const password =
     document.getElementById("password").value;
+
+  // เช็คกรอกข้อมูล
+  if(!username || !password){
+
+    document.getElementById("result")
+      .innerText = "กรุณากรอก Username และ Password";
+
+    return;
+
+  }
 
   try{
 
@@ -70,9 +90,10 @@ async function login(){
     document.getElementById("result")
       .innerText = JSON.stringify(data,null,2);
 
-    // เก็บ session
+    // login success
     if(data.success){
 
+      // เก็บ session
       localStorage.setItem(
         "user",
         JSON.stringify(data.user)
