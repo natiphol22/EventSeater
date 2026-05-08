@@ -10,82 +10,108 @@
   <style>
     body { 
       font-family: 'Inter', 'Kanit', sans-serif;
-      background-color: #fbfbfd; /* Apple-style off-white */
+      background-color: #F9F9FB; /* สีพื้นหลังโทนสว่างที่ดูแพง */
     }
-    .input-flat {
-      transition: all 0.2s ease-in-out;
-      border: 1px solid #d2d2d7;
+    .login-card {
+      background: #FFFFFF;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+      border-radius: 32px;
     }
-    .input-flat:focus {
-      border-color: #0071e3;
-      box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.1);
+    .input-field {
+      background: #F2F2F7;
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
     }
-    /* เรียบแต่ลื่นไหล */
-    .loader-dot {
+    .input-field:focus {
+      background: #FFFFFF;
+      border-color: #007AFF;
+      box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+    }
+    /* Loading Dots Animation */
+    .dot-flashing {
+      position: relative;
       width: 6px;
       height: 6px;
-      background: white;
-      border-radius: 50%;
-      display: inline-block;
-      animation: pulse 1.4s infinite ease-in-out both;
+      border-radius: 5px;
+      background-color: #FFF;
+      animation: dot-flashing 1s infinite linear alternate;
+      animation-delay: .5s;
     }
-    .loader-dot:nth-child(2) { animation-delay: 0.2s; }
-    .loader-dot:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes pulse {
-      0%, 80%, 100% { transform: scale(0); }
-      40% { transform: scale(1.0); }
+    .dot-flashing::before, .dot-flashing::after {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      top: 0;
+    }
+    .dot-flashing::before {
+      left: -12px;
+      width: 6px;
+      height: 6px;
+      border-radius: 5px;
+      background-color: #FFF;
+      animation: dot-flashing 1s infinite linear alternate;
+      animation-delay: 0s;
+    }
+    .dot-flashing::after {
+      left: 12px;
+      width: 6px;
+      height: 6px;
+      border-radius: 5px;
+      background-color: #FFF;
+      animation: dot-flashing 1s infinite linear alternate;
+      animation-delay: 1s;
+    }
+    @keyframes dot-flashing {
+      0% { background-color: #FFF; }
+      50%, 100% { background-color: rgba(255, 255, 255, 0.2); }
     }
   </style>
 </head>
 
 <body class="h-screen flex items-center justify-center p-6">
 
-  <div class="w-full max-w-[380px] animate-in fade-in duration-700">
+  <div class="login-card w-full max-w-[400px] p-10 md:p-12 animate-in fade-in duration-1000">
     
-    <div class="text-center mb-12">
-      <img src="LOGO.png" alt="Company Logo" class="h-20 mx-auto mb-6 object-contain" onerror="this.style.display='none';">
-      <h1 class="text-[24px] font-semibold text-[#1d1d1f] tracking-tight">เข้าสู่ระบบ</h1>
-      <p class="text-[#86868b] text-[14px] mt-2">กรอกข้อมูลเพื่อเข้าใช้งานระบบ</p>
+    <div class="text-center mb-10">
+      <img src="LOGO.png" alt="Company Logo" class="h-20 mx-auto mb-8 object-contain transition-transform hover:scale-105 duration-500" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block';">
+      <div id="alt-logo" class="hidden text-2xl font-semibold tracking-tight text-gray-800 mb-8">PORTAL</div>
+      <h1 class="text-2xl font-semibold text-gray-900 tracking-tight">เข้าสู่ระบบ</h1>
+      <p class="text-gray-400 text-sm mt-2 font-light">ระบุตัวตนของคุณเพื่อใช้งานระบบ</p>
     </div>
 
     <div class="space-y-4">
-      <div class="space-y-1.5">
+      <div class="relative">
         <input type="text" id="username" 
-               class="input-flat w-full px-4 py-3 rounded-xl bg-white text-[#1d1d1f] outline-none placeholder:text-[#86868b]" 
+               class="input-field w-full px-5 py-4 rounded-2xl text-gray-900 outline-none placeholder:text-gray-400 text-sm font-medium" 
                placeholder="ชื่อผู้ใช้งาน">
       </div>
 
-      <div class="space-y-1.5">
+      <div class="relative">
         <input type="password" id="password" 
-               class="input-flat w-full px-4 py-3 rounded-xl bg-white text-[#1d1d1f] outline-none placeholder:text-[#86868b]" 
+               class="input-field w-full px-5 py-4 rounded-2xl text-gray-900 outline-none placeholder:text-gray-400 text-sm font-medium" 
                placeholder="รหัสผ่าน">
       </div>
 
       <button onclick="handleLogin()" id="loginBtn"
-              class="w-full bg-[#0071e3] text-white font-medium py-3 rounded-xl hover:bg-[#0077ed] active:scale-[0.98] transition-all flex items-center justify-center mt-6 h-[48px]">
+              class="w-full bg-black text-white font-medium py-4 rounded-2xl hover:bg-gray-800 active:scale-[0.98] transition-all duration-300 flex items-center justify-center mt-8 h-[56px] shadow-lg shadow-gray-200">
         <span id="btnText">ดำเนินการต่อ</span>
-        <div id="loader" class="hidden flex gap-1 ml-2">
-          <span class="loader-dot"></span>
-          <span class="loader-dot"></span>
-          <span class="loader-dot"></span>
+        <div id="loader" class="hidden flex items-center justify-center ml-2">
+            <div class="dot-flashing mx-4"></div>
         </div>
       </button>
     </div>
 
-    <div id="message" class="mt-8 text-center text-[13px] font-medium min-h-[20px] transition-all"></div>
+    <div id="message" class="mt-8 text-center text-[13px] font-medium min-h-[20px] transition-all duration-300"></div>
 
-    <div class="mt-16 text-center">
-      <p class="text-[12px] text-[#86868b]">ฝ่ายสนับสนุนเทคโนโลยีสารสนเทศ</p>
-    </div>
+    <p class="mt-12 text-center text-[11px] text-gray-300 uppercase tracking-widest font-medium">Internal System Only</p>
   </div>
 
 <script>
-// ตรวจสอบ Session
+const API_URL = "https://script.google.com/macros/s/AKfycbx_ANVi_o-r3uTNxOAy14Sz7iNH-Q7VghmT94IkyNDBAWKGudvkFXQOWsrlxgxSDi9LmQ/exec";
+
 if (localStorage.getItem("user")) {
     window.location.href = "dashboard.html";
 }
-
-const API_URL = "https://script.google.com/macros/s/AKfycbx_ANVi_o-r3uTNxOAy14Sz7iNH-Q7VghmT94IkyNDBAWKGudvkFXQOWsrlxgxSDi9LmQ/exec";
 
 async function handleLogin() {
     const user = document.getElementById("username").value.trim();
@@ -95,13 +121,13 @@ async function handleLogin() {
     const loader = document.getElementById("loader");
 
     if (!user || !pass) {
-        showMessage("กรุณากรอกข้อมูลให้ครบถ้วน", "text-[#ff3b30]"); // Apple Red
+        showMessage("กรุณากรอกข้อมูลให้ครบถ้วน", "text-red-400");
         return;
     }
 
-    // Start Loading
+    // Start Loading UI
     btn.disabled = true;
-    text.classList.add("hidden");
+    text.style.display = 'none';
     loader.classList.remove("hidden");
     showMessage("", "");
 
@@ -113,15 +139,15 @@ async function handleLogin() {
         const data = await response.json();
 
         if (data.success) {
-            showMessage("เข้าสู่ระบบสำเร็จ", "text-[#34c759]"); // Apple Green
+            showMessage("ยืนยันตัวตนสำเร็จ", "text-green-500");
             localStorage.setItem("user", JSON.stringify(data.user));
             setTimeout(() => { window.location.href = "dashboard.html"; }, 800);
         } else {
-            showMessage(data.message || "ข้อมูลไม่ถูกต้อง", "text-[#ff3b30]");
+            showMessage(data.message || "ข้อมูลไม่ถูกต้อง", "text-red-400");
             resetBtn();
         }
     } catch (e) {
-        showMessage("เกิดข้อผิดพลาดในการเชื่อมต่อ", "text-[#ff3b30]");
+        showMessage("ไม่สามารถติดต่อเซิร์ฟเวอร์ได้", "text-red-400");
         resetBtn();
     }
 }
@@ -137,7 +163,7 @@ function resetBtn() {
     const text = document.getElementById("btnText");
     const loader = document.getElementById("loader");
     btn.disabled = false;
-    text.classList.remove("hidden");
+    text.style.display = 'block';
     loader.classList.add("hidden");
 }
 
