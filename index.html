@@ -3,86 +3,70 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Premium Company Portal | Login</title>
+  <title>Premium Login | Company Portal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Kanit', sans-serif; }
-    /* พื้นหลังแบบเคลื่อนไหวเพื่อความหรูหรา */
-    .animated-bg {
-      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
-    }
-    @keyframes gradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    /* เอฟเฟกต์กระจกโปร่งแสง */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+    .bg-gradient {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     }
   </style>
 </head>
 
-<body class="animated-bg h-screen flex items-center justify-center p-4">
+<body class="bg-gradient h-screen flex items-center justify-center p-4">
 
-  <div class="glass-card p-10 rounded-[2rem] shadow-2xl w-full max-w-md transform transition-all duration-500 hover:shadow-purple-500/20">
-    <div class="text-center mb-8">
-      <div class="inline-flex p-1 bg-gradient-to-tr from-purple-500 to-blue-500 rounded-2xl mb-4 shadow-lg">
-        <div class="bg-white p-3 rounded-[0.9rem]">
-          <img src="LOGO.png" alt="Company Logo" class="h-12 w-auto object-contain" onerror="this.src='https://via.placeholder.com/150?text=LOGO'">
-        </div>
+  <div class="bg-white p-10 rounded-[2.5rem] shadow-2xl w-full max-w-md border border-white/50">
+    
+    <div class="text-center mb-10">
+      <div class="flex justify-center mb-6">
+        <img src="LOGO.png" alt="Company Logo" class="h-24 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-text').classList.remove('hidden');">
+        <h1 id="logo-text" class="hidden text-3xl font-bold text-slate-800 tracking-tight">MY COMPANY</h1>
       </div>
-      <h2 class="text-3xl font-extrabold text-gray-800 tracking-tight">Company Portal</h2>
-      <p class="text-gray-500 mt-2 font-light">เข้าสู่ระบบเพื่อจัดการข้อมูลของคุณ</p>
+      <p class="text-slate-500 font-light">เข้าสู่ระบบเพื่อดำเนินการต่อ</p>
     </div>
 
     <div class="space-y-6">
-      <div class="group">
-        <label class="block text-sm font-semibold text-gray-700 mb-1 ml-1 transition-colors group-focus-within:text-blue-600">Username</label>
-        <div class="relative">
-          <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 group-focus-within:text-blue-500 transition-colors">
-            <i class="fas fa-user-circle text-lg"></i>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-2 ml-1">ชื่อผู้ใช้งาน</label>
+        <div class="relative group">
+          <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 group-focus-within:text-blue-500 transition-colors">
+            <i class="fas fa-user"></i>
           </span>
           <input type="text" id="username" 
-                 class="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white outline-none transition-all duration-300 shadow-sm" 
-                 placeholder="กรอกชื่อผู้ใช้งาน">
+                 class="block w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white outline-none transition-all duration-300" 
+                 placeholder="Username">
         </div>
       </div>
 
-      <div class="group">
-        <label class="block text-sm font-semibold text-gray-700 mb-1 ml-1 transition-colors group-focus-within:text-blue-600">Password</label>
-        <div class="relative">
-          <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 group-focus-within:text-blue-500 transition-colors">
-            <i class="fas fa-key text-lg"></i>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-2 ml-1">รหัสผ่าน</label>
+        <div class="relative group">
+          <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 group-focus-within:text-blue-500 transition-colors">
+            <i class="fas fa-lock"></i>
           </span>
           <input type="password" id="password" 
-                 class="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white outline-none transition-all duration-300 shadow-sm" 
+                 class="block w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white outline-none transition-all duration-300" 
                  placeholder="••••••••">
         </div>
       </div>
 
       <button onclick="handleLogin()" id="loginBtn"
-              class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-4 rounded-2xl hover:from-blue-700 hover:to-indigo-700 active:scale-[0.97] shadow-xl shadow-blue-200 transition-all duration-300 flex items-center justify-center">
-        <span id="btnText">เข้าสู่ระบบ</span>
-        <div id="loader" class="hidden ml-3">
-          <i class="fas fa-spinner fa-spin text-lg"></i>
+              class="w-full bg-slate-900 text-white font-bold py-4 rounded-2xl hover:bg-black active:scale-[0.98] shadow-lg transition-all duration-300 flex items-center justify-center overflow-hidden relative">
+        <span id="btnText" class="transition-all duration-300">เข้าสู่ระบบ</span>
+        <div id="loader" class="hidden absolute flex items-center justify-center">
+          <i class="fas fa-circle-notch animate-spin text-xl text-white"></i>
         </div>
       </button>
     </div>
 
     <div id="message" class="mt-6 text-center text-sm font-medium min-h-[40px] flex items-center justify-center px-4 rounded-xl transition-all duration-300"></div>
 
-    <p class="mt-8 text-center text-xs text-gray-400 uppercase tracking-widest font-medium">Internal System Only</p>
   </div>
 
 <script>
-// ตรวจสอบ Session ทันทีที่เข้าหน้าเพจ
+// ตรวจสอบสถานะการ Login [cite: 25]
 if (localStorage.getItem("user")) {
     window.location.href = "dashboard.html";
 }
@@ -104,8 +88,8 @@ async function handleLogin() {
         return;
     }
 
-    // เปิดใช้งานสถานะ Loading และปิดปุ่มกด
-    toggleUIState(true);
+    // เริ่มสถานะ Loading [cite: 24, 43]
+    toggleLoading(true);
 
     try {
         const response = await fetch(API_URL, {
@@ -120,53 +104,51 @@ async function handleLogin() {
         const data = await response.json();
 
         if (data.success) {
-            showMessage("ยินดีต้อนรับ! กำลังเข้าสู่ระบบ...", "success");
+            showMessage("สำเร็จ! กำลังเข้าสู่ระบบ...", "success");
             localStorage.setItem("user", JSON.stringify(data.user));
-            setTimeout(() => { window.location.href = "dashboard.html"; }, 1500);
+            setTimeout(() => { window.location.href = "dashboard.html"; }, 1000);
         } else {
-            showMessage(data.message || "ข้อมูลไม่ถูกต้อง กรุณาลองใหม่", "error");
-            toggleUIState(false);
+            showMessage(data.message || "Username หรือ Password ไม่ถูกต้อง", "error");
+            toggleLoading(false);
         }
 
     } catch (error) {
         console.error("Login Error:", error);
         showMessage("ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้", "error");
-        toggleUIState(false);
+        toggleLoading(false);
     }
 }
 
-function toggleUIState(isLoading) {
+function toggleLoading(isLoading) {
     const loginBtn = document.getElementById("loginBtn");
     const loader = document.getElementById("loader");
     const btnText = document.getElementById("btnText");
 
     if (isLoading) {
-        loginBtn.disabled = true; // ป้องกัน Double Submission
+        loginBtn.disabled = true; // ป้องกันการกดซ้ำ 
         loader.classList.remove("hidden");
-        btnText.innerText = "กำลังประมวลผล";
-        loginBtn.classList.add("opacity-80", "cursor-wait");
+        btnText.classList.add("opacity-0", "translate-y-10");
+        loginBtn.classList.add("opacity-90");
     } else {
         loginBtn.disabled = false;
         loader.classList.add("hidden");
-        btnText.innerText = "เข้าสู่ระบบ";
-        loginBtn.classList.remove("opacity-80", "cursor-wait");
+        btnText.classList.remove("opacity-0", "translate-y-10");
+        loginBtn.classList.remove("opacity-90");
     }
 }
 
 function showMessage(text, type) {
     const msgEl = document.getElementById("message");
     msgEl.innerText = text;
-    // แยกสีชัดเจนตามสถานะ
+    // แยกสีตามสถานะ: แดง (Error), เขียว (Success) [cite: 24, 34, 43]
     if (type === "success") {
-        msgEl.className = "mt-6 text-center text-sm font-medium py-3 px-4 rounded-xl text-green-600 bg-green-50 border border-green-100 flex items-center justify-center";
-        msgEl.innerHTML = `<i class="fas fa-check-circle mr-2"></i> ${text}`;
+        msgEl.className = "mt-6 text-center text-sm font-medium py-3 px-4 rounded-xl text-green-600 bg-green-50 flex items-center justify-center";
     } else {
-        msgEl.className = "mt-6 text-center text-sm font-medium py-3 px-4 rounded-xl text-red-500 bg-red-50 border border-red-100 flex items-center justify-center";
-        msgEl.innerHTML = `<i class="fas fa-exclamation-circle mr-2"></i> ${text}`;
+        msgEl.className = "mt-6 text-center text-sm font-medium py-3 px-4 rounded-xl text-red-500 bg-red-50 flex items-center justify-center";
     }
 }
 
-// กด Enter เพื่อเข้าสู่ระบบ
+// รองรับการกด Enter [cite: 24]
 document.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') handleLogin();
 });
