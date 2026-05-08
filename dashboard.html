@@ -3,235 +3,196 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enterprise Intelligence Dashboard</title>
+  <title>Corporate Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', 'Kanit', sans-serif; background-color: #F3F4F6; }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    .glass-card:hover { transform: translateY(-8px); box-shadow: 0 20px 30px -10px rgba(0,0,0,0.05); }
-    .ai-active-gradient {
-      background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
-      box-shadow: 0 10px 20px -5px rgba(58, 123, 213, 0.4);
-    }
-    .sidebar-active { border-right: 4px solid #3b82f6; background: linear-gradient(90deg, rgba(59, 130, 246, 0.1) 0%, transparent 100%); }
+    body { font-family: 'Kanit', sans-serif; }
+    /* ซ่อน Scrollbar แต่ยังเลื่อนได้ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
   </style>
 </head>
-<body class="min-h-screen flex text-gray-800">
 
-  <aside class="w-72 bg-white border-r border-gray-100 hidden lg:flex flex-col sticky top-0 h-screen">
-    <div class="p-8">
-      <div class="flex items-center gap-3 mb-10">
-        <div class="bg-blue-600 h-10 w-10 rounded-xl flex items-center justify-center text-white shadow-lg">
-          <i class="fas fa-layer-group"></i>
-        </div>
-        <span class="text-xl font-bold tracking-tight text-gray-900">CUBIC<span class="text-blue-600">PLUS</span></span>
-      </div>
-      
-      <nav class="space-y-1">
-        <a href="#" class="flex items-center gap-4 px-4 py-3 text-blue-600 sidebar-active rounded-lg font-medium">
-          <i class="fas fa-home-alt w-5"></i> หน้าแรก
-        </a>
-        <a href="Ai.html" class="flex items-center gap-4 px-4 py-3 text-gray-400 hover:text-blue-500 hover:bg-gray-50 rounded-lg transition-all font-medium">
-          <i class="fas fa-robot w-5"></i> AI Assistant
-        </a>
-        <a href="Form.html" class="flex items-center gap-4 px-4 py-3 text-gray-400 hover:text-blue-500 hover:bg-gray-50 rounded-lg transition-all font-medium">
-          <i class="fas fa-wallet w-5"></i> เบี้ยเลี้ยง
-        </a>
-        <div id="admin-sidebar" class="hidden">
-           <a href="admin.html" class="flex items-center gap-4 px-4 py-3 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all font-medium">
-            <i class="fas fa-user-shield w-5"></i> ส่วนผู้ดูแลระบบ
-          </a>
-        </div>
-      </nav>
-    </div>
-    
-    <div class="mt-auto p-8 border-t border-gray-50">
-      <button onclick="logout()" class="flex items-center gap-3 text-gray-400 hover:text-red-500 transition-colors font-medium">
-        <i class="fas fa-sign-out-alt"></i> ออกจากระบบ
-      </button>
-    </div>
-  </aside>
+<body class="bg-slate-50 min-h-screen text-slate-800">
 
-  <main class="flex-1 p-6 lg:p-12 overflow-y-auto">
+  <!-- Navbar (Glassmorphism Effect) -->
+  <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-slate-200 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        
+        <!-- Logo Area -->
+        <div class="flex items-center gap-3 cursor-pointer">
+          <div class="bg-gradient-to-tr from-blue-600 to-indigo-500 p-2.5 rounded-xl text-white shadow-md shadow-blue-200">
+            <i class="fas fa-chart-pie text-xl"></i>
+          </div>
+          <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-800 to-slate-600">CompanyPortal</span>
+        </div>
+        
+        <!-- User Actions -->
+        <div class="flex items-center gap-5">
+          <div class="text-right hidden sm:block">
+            <p id="nav-user-name" class="text-sm font-semibold text-slate-800"></p>
+            <p id="nav-user-role" class="text-xs text-indigo-500 font-medium uppercase tracking-wider"></p>
+          </div>
+          
+          <!-- Divider -->
+          <div class="hidden sm:block w-px h-8 bg-slate-200"></div>
+
+          <button onclick="logout()" 
+                  class="group flex items-center gap-2 bg-rose-50 text-rose-600 px-4 py-2 rounded-xl hover:bg-rose-500 hover:text-white transition-all duration-300 font-medium text-sm shadow-sm">
+            <i class="fas fa-sign-out-alt group-hover:-translate-x-1 transition-transform"></i>
+            <span>ออกจากระบบ</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
     
-    <header class="flex justify-between items-center mb-12">
-      <div>
-        <h1 class="text-3xl font-bold text-gray-900">แดชบอร์ดอัจฉริยะ</h1>
-        <p class="text-gray-400 mt-1" id="realtime-clock"></p>
-      </div>
-      <div class="flex items-center gap-4">
-        <div class="text-right">
-          <p id="nav-user-name" class="text-sm font-bold text-gray-900"></p>
-          <p id="nav-user-role" class="text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded font-bold uppercase"></p>
-        </div>
-        <div class="h-12 w-12 rounded-2xl bg-gray-200 border-2 border-white shadow-sm overflow-hidden">
-          <img src="https://ui-avatars.com/api/?background=random&name=User" alt="avatar" id="user-avatar">
-        </div>
-      </div>
+    <!-- Header -->
+    <header class="mb-8 animate-fade-in-down">
+      <h1 class="text-3xl font-bold">
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">ยินดีต้อนรับกลับมา!</span> 👋
+      </h1>
+      <p class="text-slate-500 mt-1">นี่คือสรุปข้อมูลและสถานะการทำงานของคุณในวันนี้</p>
     </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       
-      <div class="glass-card p-6 rounded-[2rem]">
-        <div class="flex justify-between items-start mb-4">
-          <div class="bg-blue-50 text-blue-500 p-3 rounded-2xl"><i class="fas fa-calendar-check text-xl"></i></div>
-          <span class="text-xs font-bold text-green-500 bg-green-50 px-2 py-1 rounded-lg">+2 วัน</span>
+      <!-- Profile Card -->
+      <div class="lg:col-span-1 bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
+        <div class="bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 h-28 relative">
+          <!-- Decorative circle -->
+          <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/20 rounded-full blur-xl"></div>
         </div>
-        <h3 class="text-gray-400 text-xs font-bold uppercase tracking-widest">วันทำงานเดือนนี้</h3>
-        <p class="text-3xl font-bold mt-1 text-gray-900"><span id="work-days">--</span> <span class="text-sm font-normal text-gray-400">/ 22</span></p>
-      </div>
-
-      <div class="glass-card p-6 rounded-[2rem]">
-        <div class="flex justify-between items-start mb-4">
-          <div class="bg-orange-50 text-orange-500 p-3 rounded-2xl"><i class="fas fa-gas-pump text-xl"></i></div>
-        </div>
-        <h3 class="text-gray-400 text-xs font-bold uppercase tracking-widest">งบค่าน้ำมันคงเหลือ</h3>
-        <p class="text-3xl font-bold mt-1 text-gray-900"><span id="oil-budget">--</span> <span class="text-sm font-normal text-gray-400">บาท</span></p>
-      </div>
-
-      <div onclick="window.location.href='Ai.html'" class="ai-active-gradient p-6 rounded-[2rem] text-white cursor-pointer group lg:col-span-2 overflow-hidden relative">
-        <div class="relative z-10">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="bg-white/20 p-2 rounded-lg animate-pulse"><i class="fas fa-sparkles text-lg"></i></div>
-            <span class="text-[10px] font-bold border border-white/30 px-2 py-0.5 rounded-full uppercase tracking-tighter">Full Production</span>
+        
+        <div class="px-6 pb-6 text-center -mt-14 relative z-10">
+          <div class="inline-block p-1.5 bg-white rounded-full shadow-lg mb-4 ring-4 ring-white">
+             <div class="bg-slate-100 h-24 w-24 rounded-full flex items-center justify-center text-slate-400 text-4xl font-bold">
+                <i class="fas fa-user-astronaut"></i>
+             </div>
           </div>
-          <h3 class="text-2xl font-bold">AI Intelligence Assistant</h3>
-          <p class="text-white/80 text-sm mt-2 max-w-xs font-light">ถามคำถาม จัดการเอกสาร หรือให้ช่วยวิเคราะห์ข้อมูลได้ทันทีเพียงแค่คลิก</p>
-        </div>
-        <i class="fas fa-robot absolute right-[-20px] bottom-[-20px] text-[150px] text-white/10 group-hover:rotate-12 transition-transform duration-500"></i>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      
-      <div class="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-4">
-        <a href="#" class="glass-card p-6 rounded-3xl flex flex-col items-center group">
-          <div class="bg-gray-50 text-gray-400 group-hover:bg-blue-50 group-hover:text-blue-500 w-14 h-14 rounded-2xl flex items-center justify-center mb-4 transition-colors">
-            <i class="fas fa-fingerprint text-2xl"></i>
+          <h2 id="card-name" class="text-xl font-bold text-slate-800"></h2>
+          <span id="card-role-badge" class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-600 mt-2 uppercase tracking-wide border border-indigo-100"></span>
+          
+          <div class="mt-6 border-t border-slate-100 pt-6 space-y-4 text-left">
+            <div class="flex justify-between text-sm items-center">
+              <span class="text-slate-500 flex items-center gap-2"><i class="fas fa-building text-slate-400"></i> แผนก</span>
+              <span id="card-department" class="font-semibold text-slate-700 bg-slate-50 px-2 py-1 rounded-md"></span>
+            </div>
+            <div class="flex justify-between text-sm items-center">
+              <span class="text-slate-500 flex items-center gap-2"><i class="fas fa-circle-check text-slate-400"></i> สถานะ</span>
+              <span class="text-emerald-600 flex items-center gap-1.5 font-medium bg-emerald-50 px-2 py-1 rounded-md">
+                <span class="relative flex h-2.5 w-2.5">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                Active
+              </span>
+            </div>
           </div>
-          <span class="font-bold text-gray-700 text-sm">Check-in</span>
-        </a>
-
-        <a href="oil.html" class="glass-card p-6 rounded-3xl flex flex-col items-center group">
-          <div class="bg-gray-50 text-gray-400 group-hover:bg-orange-50 group-hover:text-orange-500 w-14 h-14 rounded-2xl flex items-center justify-center mb-4 transition-colors">
-            <i class="fas fa-gas-pump text-2xl"></i>
-          </div>
-          <span class="font-bold text-gray-700 text-sm">ค่าน้ำมัน</span>
-        </a>
-
-        <a href="PDFtoJPG.html" class="glass-card p-6 rounded-3xl flex flex-col items-center group">
-          <div class="bg-gray-50 text-gray-400 group-hover:bg-indigo-50 group-hover:text-indigo-500 w-14 h-14 rounded-2xl flex items-center justify-center mb-4 transition-colors">
-            <i class="fas fa-file-image text-2xl"></i>
-          </div>
-          <span class="font-bold text-gray-700 text-sm">PDF to JPG</span>
-        </a>
-
-        <a href="#" class="glass-card p-6 rounded-3xl flex flex-col items-center group">
-          <div class="bg-gray-50 text-gray-400 group-hover:bg-red-50 group-hover:text-red-500 w-14 h-14 rounded-2xl flex items-center justify-center mb-4 transition-colors">
-            <i class="fas fa-clock-rotate-left text-2xl"></i>
-          </div>
-          <span class="font-bold text-gray-700 text-sm">ระบบลางาน</span>
-        </a>
-
-        <a href="#" class="glass-card p-6 rounded-3xl flex flex-col items-center group">
-          <div class="bg-gray-50 text-gray-400 group-hover:bg-amber-50 group-hover:text-amber-500 w-14 h-14 rounded-2xl flex items-center justify-center mb-4 transition-colors">
-            <i class="fas fa-calendar-alt text-2xl"></i>
-          </div>
-          <span class="font-bold text-gray-700 text-sm">วันหยุดบริษัท</span>
-        </a>
-
-        <a href="admin.html" id="admin-card" class="hidden bg-slate-900 p-6 rounded-3xl flex flex-col items-center shadow-xl shadow-slate-200">
-          <div class="bg-white/10 text-white w-14 h-14 rounded-2xl flex items-center justify-center mb-4">
-            <i class="fas fa-shield-halved text-2xl"></i>
-          </div>
-          <span class="font-bold text-white text-sm text-center">Admin<br>Settings</span>
-        </a>
-      </div>
-
-      <div class="lg:col-span-1 glass-card p-8 rounded-[2rem]">
-        <h4 class="text-lg font-bold mb-6 flex items-center gap-2">
-          <i class="fas fa-bullhorn text-blue-500"></i> ประกาศภายใน
-        </h4>
-        <div id="announcement-content" class="text-sm text-gray-500 leading-relaxed space-y-4">
-           <div class="animate-pulse bg-gray-100 h-20 rounded-xl"></div>
         </div>
       </div>
 
+      <!-- Stats & Content -->
+      <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+        
+        <!-- Stat Card 1 -->
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 group">
+          <div class="flex justify-between items-start mb-4">
+            <div class="text-blue-600 bg-blue-50 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <i class="fas fa-calendar-check text-2xl"></i>
+            </div>
+            <span class="text-xs font-semibold text-emerald-500 bg-emerald-50 px-2 py-1 rounded-lg">+2 วัน</span>
+          </div>
+          <h3 class="text-slate-500 text-sm font-medium mb-1">วันทำงานเดือนนี้</h3>
+          <div class="flex items-end gap-2">
+            <p class="text-3xl font-bold text-slate-800">18</p>
+            <p class="text-slate-400 font-medium mb-1">/ 22 วัน</p>
+          </div>
+          <!-- Progress Bar -->
+          <div class="w-full bg-slate-100 rounded-full h-1.5 mt-4">
+            <div class="bg-blue-500 h-1.5 rounded-full" style="width: 80%"></div>
+          </div>
+        </div>
+
+        <!-- Stat Card 2 -->
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 group">
+          <div class="flex justify-between items-start mb-4">
+            <div class="text-purple-600 bg-purple-50 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <i class="fas fa-layer-group text-2xl"></i>
+            </div>
+            <span class="text-xs font-semibold text-amber-500 bg-amber-50 px-2 py-1 rounded-lg">In Progress</span>
+          </div>
+          <h3 class="text-slate-500 text-sm font-medium mb-1">โปรเจกต์ที่ได้รับมอบหมาย</h3>
+          <p class="text-3xl font-bold text-slate-800">4 <span class="text-base text-slate-400 font-medium">โครงการ</span></p>
+          <!-- Progress Bar -->
+          <div class="w-full bg-slate-100 rounded-full h-1.5 mt-4">
+            <div class="bg-purple-500 h-1.5 rounded-full" style="width: 45%"></div>
+          </div>
+        </div>
+
+        <!-- Announcement Card -->
+        <div class="sm:col-span-2 bg-gradient-to-r from-amber-50 to-orange-50/30 p-6 rounded-3xl shadow-sm border border-amber-100 border-l-4 border-l-amber-500 relative overflow-hidden">
+          <!-- Background Decoration -->
+          <i class="fas fa-bullhorn absolute -right-4 -bottom-4 text-8xl text-amber-500/5 rotate-[-15deg]"></i>
+          
+          <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2 text-lg relative z-10">
+            <div class="bg-amber-100 text-amber-600 p-1.5 rounded-lg">
+              <i class="fas fa-bell text-sm"></i>
+            </div>
+            ประกาศภายใน (Announcement)
+          </h3>
+          <p class="text-sm text-slate-600 leading-relaxed relative z-10">
+            ยินดีต้อนรับสู่ระบบ Corporate Portal โฉมใหม่! ท่านสามารถตรวจสอบข้อมูลพนักงานและโครงการที่ได้รับมอบหมายได้ที่หน้านี้ หากพบปัญหาการใช้งาน หรือต้องการเสนอแนะการปรับปรุง กรุณาติดต่อฝ่าย IT Support เบอร์ <span class="font-semibold text-slate-800">1234</span>
+          </p>
+        </div>
+
+      </div>
     </div>
   </main>
 
 <script>
-  // URL ของ Web App จาก Google Sheets ที่คุณให้มา (ต้องมีการ Deploy doGet กลับมาเป็น JSON)
-  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbx_ANVi_o-r3uTNxOAy14Sz7iNH-Q7VghmT94IkyNDBAWKGudvkFXQOWsrlxgxSDi9LmQ/exec";
+  // --- Data Logic ---
+  let userStr = localStorage.getItem("user");
+  let user = JSON.parse(userStr);
 
-  // --- Initial Data ---
-  const user = JSON.parse(localStorage.getItem("user"));
-
+  // MOCK DATA: ใส่ข้อมูลจำลองไว้ให้เพื่อดูดีไซน์ตอนยังไม่ได้ Login
+  // หากต้องการใช้ระบบ Login จริง ให้ลบ Block `if(!user)` ด้านล่างนี้ออก แล้วใช้ `window.location.href = "index.html";` แทน
   if (!user) {
-    window.location.href = "index.html";
-  } else {
-    initDashboard();
-    fetchSheetData(); // ฟังก์ชันดึงข้อมูลแบบ Real-time
+    user = {
+      firstNameTH: "สมชาย",
+      lastNameTH: "ใจดี",
+      role: "Senior Developer",
+      department: "IT & Engineering"
+    };
+    console.log("Using mock data for design preview.");
   }
 
-  function initDashboard() {
+  // Render Data
+  if (user) {
     document.getElementById("nav-user-name").innerText = `${user.firstNameTH} ${user.lastNameTH}`;
     document.getElementById("nav-user-role").innerText = user.role;
-    document.getElementById("user-avatar").src = `https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.firstNameTH}`;
     
-    // ตรวจสอบ Admin
-    if (user.role && user.role.toLowerCase() === 'admin') {
-      document.getElementById("admin-sidebar").classList.remove("hidden");
-      document.getElementById("admin-card").classList.remove("hidden");
-    }
-
-    // นาฬิกา
-    setInterval(() => {
-      const now = new Date();
-      document.getElementById("realtime-clock").innerText = now.toLocaleDateString('th-TH', { 
-        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' 
-      });
-    }, 1000);
+    document.getElementById("card-name").innerText = `${user.firstNameTH} ${user.lastNameTH}`;
+    document.getElementById("card-role-badge").innerText = user.role;
+    document.getElementById("card-department").innerText = user.department;
   }
 
-  async function fetchSheetData() {
-    try {
-      // ดึงข้อมูลจาก Sheet (สมมติว่า API ส่งข้อมูล stats กลับมา)
-      const response = await fetch(`${API_ENDPOINT}?action=getDashboardStats&username=${user.username}`);
-      const data = await response.json();
-      
-      if(data.success) {
-        document.getElementById("work-days").innerText = data.workDays || "18";
-        document.getElementById("oil-budget").innerText = data.oilBudget || "2,500";
-        document.getElementById("announcement-content").innerText = data.announcement || "ยินดีต้อนรับเข้าสู่ระบบใหม่ ข้อมูลทุกอย่างเชื่อมต่อแบบ Real-time แล้ววันนี้";
-      }
-    } catch (e) {
-      console.log("Using local fallback data");
-      // Fallback ถ้ายังไม่ได้ทำ API ส่วนดึงข้อมูล
-      document.getElementById("work-days").innerText = "18";
-      document.getElementById("oil-budget").innerText = "2,500";
-      document.getElementById("announcement-content").innerHTML = `
-        <div class="p-4 bg-blue-50 rounded-2xl border border-blue-100">
-          <p class="text-blue-700 font-medium">✨ ระบบอัปเกรดสำเร็จ</p>
-          <p class="text-blue-600/70 text-xs mt-1">ขณะนี้เชื่อมต่อข้อมูลกับ Google Sheets ของคุณเรียบร้อยแล้ว</p>
-        </div>
-      `;
-    }
-  }
-
+  // --- Logout Function ---
   function logout() {
-    if (confirm("ต้องการออกจากระบบหรือไม่?")) {
+    if (confirm("คุณต้องการออกจากระบบใช่หรือไม่?")) {
       localStorage.removeItem("user");
-      window.location.href = "index.html";
+      // เปลี่ยนกลับไปหน้า Login จริงของคุณ
+      window.location.href = "index.html"; 
     }
   }
 </script>
+
 </body>
 </html>
