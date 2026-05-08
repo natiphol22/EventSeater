@@ -3,119 +3,126 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-  <title>Company Portal Login</title>
+  <title>Company Portal | Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
 
-  <h2>Company Portal Login</h2>
+  <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-bold text-gray-800">Company Portal</h2>
+      <p class="text-gray-500">กรุณาเข้าสู่ระบบเพื่อใช้งาน</p>
+    </div>
 
-  <input
-    type="text"
-    id="username"
-    placeholder="Username"
-  >
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Username</label>
+        <input type="text" id="username" 
+               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+               placeholder="กรอกชื่อผู้ใช้งาน">
+      </div>
 
-  <br><br>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Password</label>
+        <input type="password" id="password" 
+               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
+               placeholder="••••••••">
+      </div>
 
-  <input
-    type="password"
-    id="password"
-    placeholder="Password"
-  >
+      <button onclick="handleLogin()" id="loginBtn"
+              class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200 flex items-center justify-center">
+        <span>เข้าสู่ระบบ</span>
+      </button>
+    </div>
 
-  <br><br>
-
-  <button onclick="login()">
-    Login
-  </button>
-
-  <h3>Result</h3>
-
-  <pre id="result"></pre>
+    <div id="message" class="mt-4 text-center text-sm font-medium min-h-[20px]"></div>
+  </div>
 
 <script>
+// --- Configuration ---
+const API_URL = "YOUR_GOOGLE_SCRIPT_URL_HERE";
 
-// ถ้า login อยู่แล้ว ให้เข้า dashboard เลย
-const currentUser =
-  localStorage.getItem("user");
-
-if(currentUser){
-
-  window.location.href = "dashboard.html";
-
+// --- Session Check ---
+if (localStorage.getItem("user")) {
+    window.location.href = "dashboard.html";
 }
 
-const API_URL =
-"https://script.google.com/macros/s/AKfycbx_ANVi_o-r3uTNxOAy14Sz7iNH-Q7VghmT94IkyNDBAWKGudvkFXQOWsrlxgxSDi9LmQ/exec";
+// --- Functions ---
+async function handleLogin() {
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const loginBtn = document.getElementById("loginBtn");
+    const messageEl = document.getElementById("message");
 
-async function login(){
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
 
-  const username =
-    document.getElementById("username").value;
-
-  const password =
-    document.getElementById("password").value;
-
-  // เช็คกรอกข้อมูล
-  if(!username || !password){
-
-    document.getElementById("result")
-      .innerText = "กรุณากรอก Username และ Password";
-
-    return;
-
-  }
-
-  try{
-
-    const response = await fetch(API_URL,{
-
-      method:"POST",
-
-      body: JSON.stringify({
-        action:"login",
-        username: username,
-        password: password
-      })
-
-    });
-
-    const data = await response.json();
-
-    console.log(data);
-
-    // แสดงผล
-    document.getElementById("result")
-      .innerText = JSON.stringify(data,null,2);
-
-    // login success
-    if(data.success){
-
-      // เก็บ session
-      localStorage.setItem(
-        "user",
-        JSON.stringify(data.user)
-      );
-
-      // ไปหน้า dashboard
-      window.location.href = "dashboard.html";
-
+    if (!username || !password) {
+        showMessage("กรุณากรอกข้อมูลให้ครบถ้วน", "text-red-500");
+        return;
     }
 
-  }catch(error){
+    // Set Loading State
+    toggleLoading(true);
 
-    console.error(error);
+    try {
+        // ใช้ URLSearchParams หรือส่งเป็น Object ปกติแต่ต้องระวังเรื่อง CORS 
+        // Google Apps Script รับ POST แบบ Content-Type text/plain จะเลี่ยงปัญหา CORS ได้ง่ายกว่าในบางกรณี
+        const response = await fetch(API_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                action: "login",
+                username: username,
+                password: password
+            })
+        });
 
-    document.getElementById("result")
-      .innerText = error;
+        const data = await response.json();
 
-  }
+        if (data.success) {
+            showMessage("เข้าสู่ระบบสำเร็จ! กำลังเปลี่ยนหน้า...", "text-green-500");
+            localStorage.setItem("user", JSON.stringify(data.user));
+            
+            setTimeout(() => {
+                window.location.href = "dashboard.html";
+            }, 1000);
+        } else {
+            showMessage(data.message || "Username หรือ Password ไม่ถูกต้อง", "text-red-500");
+            toggleLoading(false);
+        }
 
+    } catch (error) {
+        console.error("Login Error:", error);
+        showMessage("เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์", "text-red-500");
+        toggleLoading(false);
+    }
 }
 
-</script>
+function showMessage(text, colorClass) {
+    const messageEl = document.getElementById("message");
+    messageEl.innerText = text;
+    messageEl.className = `mt-4 text-center text-sm font-medium ${colorClass}`;
+}
 
+function toggleLoading(isLoading) {
+    const btn = document.getElementById("loginBtn");
+    if (isLoading) {
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fas fa-circle-notch animate-spin mr-2"></i> กำลังตรวจสอบ...`;
+        btn.classList.add("opacity-70", "cursor-not-allowed");
+    } else {
+        btn.disabled = false;
+        btn.innerHTML = `<span>เข้าสู่ระบบ</span>`;
+        btn.classList.remove("opacity-70", "cursor-not-allowed");
+    }
+}
+
+// กด Enter เพื่อ Login
+document.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleLogin();
+});
+</script>
 </body>
 </html>
