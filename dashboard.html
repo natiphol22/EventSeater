@@ -21,11 +21,10 @@
 
 <script>
 
-// ดึงข้อมูล user
 const user =
   JSON.parse(localStorage.getItem("user"));
 
-// ถ้ายังไม่ได้ login
+// ยังไม่ได้ login
 if(!user){
 
   window.location.href = "index.html";
