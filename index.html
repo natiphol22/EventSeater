@@ -3,155 +3,141 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Premium Login | Company Portal</title>
+  <title>CubicPlus | Secure Portal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Kanit', sans-serif; }
-    .bg-gradient {
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    :root { --neon-blue: #00f2ff; --neon-purple: #7000ff; }
+    body { font-family: 'Kanit', sans-serif; background: #0a0b1e; overflow: hidden; }
+    .tech-font { font-family: 'Orbitron', sans-serif; }
+    
+    /* พื้นหลังแบบ Tech Grid */
+    .bg-tech {
+      background: linear-gradient(rgba(10, 11, 30, 0.9), rgba(10, 11, 30, 0.9)),
+                  url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+      height: 100vh; display: flex; align-items: center; justify-content: center;
     }
+
+    /* Glassmorphism ขั้นสูง */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ปุ่มแบบ Neon Glow */
+    .btn-neon {
+      background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+      transition: 0.3s; box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+    }
+    .btn-neon:hover:not(:disabled) { box-shadow: 0 0 30px rgba(0, 242, 255, 0.6); transform: translateY(-2px); }
+    .btn-neon:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* อะนิเมชั่นสถานะโหลด */
+    @keyframes spin-tech { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .loader-icon { animation: spin-tech 1s linear infinite; }
   </style>
 </head>
 
-<body class="bg-gradient h-screen flex items-center justify-center p-4">
+<body class="bg-tech">
 
-  <div class="bg-white p-10 rounded-[2.5rem] shadow-2xl w-full max-w-md border border-white/50">
-    
-    <div class="text-center mb-10">
-      <div class="flex justify-center mb-6">
-        <img src="LOGO.png" alt="Company Logo" class="h-24 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-text').classList.remove('hidden');">
-        <h1 id="logo-text" class="hidden text-3xl font-bold text-slate-800 tracking-tight">MY COMPANY</h1>
-      </div>
-      <p class="text-slate-500 font-light">เข้าสู่ระบบเพื่อดำเนินการต่อ</p>
+  <div class="glass-panel p-10 rounded-[3rem] w-full max-w-md relative overflow-hidden">
+    <div class="absolute -top-20 -right-20 w-40 h-40 bg-blue-500/20 blur-[80px]"></div>
+    <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-purple-500/20 blur-[80px]"></div>
+
+    <div class="text-center mb-10 relative">
+      <img src="LOGO.png" alt="Logo" class="h-20 mx-auto mb-4 drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" onerror="this.style.display='none';">
+      <h2 class="tech-font text-2xl font-bold text-white tracking-widest uppercase">System Access</h2>
+      <div class="h-1 w-12 bg-cyan-400 mx-auto mt-2 rounded-full shadow-[0_0_10px_#00f2ff]"></div>
     </div>
 
-    <div class="space-y-6">
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-2 ml-1">ชื่อผู้ใช้งาน</label>
-        <div class="relative group">
-          <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 group-focus-within:text-blue-500 transition-colors">
-            <i class="fas fa-user"></i>
-          </span>
-          <input type="text" id="username" 
-                 class="block w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white outline-none transition-all duration-300" 
-                 placeholder="Username">
+    <div class="space-y-6 relative">
+      <div class="space-y-1">
+        <label class="text-xs text-cyan-400/70 ml-2 tech-font uppercase tracking-tighter">Identity ID</label>
+        <div class="relative">
+          <i class="fas fa-id-badge absolute left-4 top-4 text-cyan-400/50"></i>
+          <input type="text" id="username" class="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-white outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/30 transition-all" placeholder="Enter Username">
         </div>
       </div>
 
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-2 ml-1">รหัสผ่าน</label>
-        <div class="relative group">
-          <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 group-focus-within:text-blue-500 transition-colors">
-            <i class="fas fa-lock"></i>
-          </span>
-          <input type="password" id="password" 
-                 class="block w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white outline-none transition-all duration-300" 
-                 placeholder="••••••••">
+      <div class="space-y-1">
+        <label class="text-xs text-cyan-400/70 ml-2 tech-font uppercase tracking-tighter">Security Key</label>
+        <div class="relative">
+          <i class="fas fa-fingerprint absolute left-4 top-4 text-cyan-400/50"></i>
+          <input type="password" id="password" class="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-white outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/30 transition-all" placeholder="••••••••">
         </div>
       </div>
 
-      <button onclick="handleLogin()" id="loginBtn"
-              class="w-full bg-slate-900 text-white font-bold py-4 rounded-2xl hover:bg-black active:scale-[0.98] shadow-lg transition-all duration-300 flex items-center justify-center overflow-hidden relative">
-        <span id="btnText" class="transition-all duration-300">เข้าสู่ระบบ</span>
-        <div id="loader" class="hidden absolute flex items-center justify-center">
-          <i class="fas fa-circle-notch animate-spin text-xl text-white"></i>
-        </div>
+      <button onclick="handleLogin()" id="loginBtn" class="btn-neon w-full py-4 rounded-2xl text-white font-bold tech-font tracking-widest flex items-center justify-center">
+        <span id="btnText">Execute Login</span>
+        <i id="loadingIcon" class="fas fa-microchip loader-icon ml-3 hidden text-xl"></i>
       </button>
     </div>
 
-    <div id="message" class="mt-6 text-center text-sm font-medium min-h-[40px] flex items-center justify-center px-4 rounded-xl transition-all duration-300"></div>
-
+    <div id="message" class="mt-8 text-center text-sm font-medium min-h-[25px]"></div>
   </div>
 
 <script>
-// ตรวจสอบสถานะการ Login [cite: 25]
-if (localStorage.getItem("user")) {
-    window.location.href = "dashboard.html";
-}
-
 const API_URL = "https://script.google.com/macros/s/AKfycbx_ANVi_o-r3uTNxOAy14Sz7iNH-Q7VghmT94IkyNDBAWKGudvkFXQOWsrlxgxSDi9LmQ/exec";
 
+if (localStorage.getItem("user")) { window.location.href = "dashboard.html"; }
+
 async function handleLogin() {
-    const usernameInput = document.getElementById("username");
-    const passwordInput = document.getElementById("password");
-    const loginBtn = document.getElementById("loginBtn");
-    const loader = document.getElementById("loader");
-    const btnText = document.getElementById("btnText");
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value.trim();
+    const btn = document.getElementById("loginBtn");
+    const text = document.getElementById("btnText");
+    const loader = document.getElementById("loadingIcon");
 
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value.trim();
-
-    if (!username || !password) {
-        showMessage("กรุณากรอกข้อมูลให้ครบถ้วน", "error");
+    if (!user || !pass) {
+        showMsg("Authentication Required", "text-red-400");
         return;
     }
 
-    // เริ่มสถานะ Loading [cite: 24, 43]
-    toggleLoading(true);
+    // เปิดสถานะ Loading
+    btn.disabled = true;
+    text.innerText = "Processing...";
+    loader.classList.remove("hidden");
 
     try {
         const response = await fetch(API_URL, {
             method: "POST",
-            body: JSON.stringify({
-                action: "login",
-                username: username,
-                password: password
-            })
+            body: JSON.stringify({ action: "login", username: user, password: pass })
         });
-
         const data = await response.json();
 
         if (data.success) {
-            showMessage("สำเร็จ! กำลังเข้าสู่ระบบ...", "success");
+            showMsg("Access Granted. Redirecting...", "text-cyan-400");
             localStorage.setItem("user", JSON.stringify(data.user));
-            setTimeout(() => { window.location.href = "dashboard.html"; }, 1000);
+            setTimeout(() => { window.location.href = "dashboard.html"; }, 1500);
         } else {
-            showMessage(data.message || "Username หรือ Password ไม่ถูกต้อง", "error");
-            toggleLoading(false);
+            showMsg(data.message || "Identity Mismatch", "text-red-400");
+            resetBtn();
         }
-
-    } catch (error) {
-        console.error("Login Error:", error);
-        showMessage("ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้", "error");
-        toggleLoading(false);
+    } catch (e) {
+        showMsg("Network Failure", "text-red-400");
+        resetBtn();
     }
 }
 
-function toggleLoading(isLoading) {
-    const loginBtn = document.getElementById("loginBtn");
-    const loader = document.getElementById("loader");
-    const btnText = document.getElementById("btnText");
-
-    if (isLoading) {
-        loginBtn.disabled = true; // ป้องกันการกดซ้ำ 
-        loader.classList.remove("hidden");
-        btnText.classList.add("opacity-0", "translate-y-10");
-        loginBtn.classList.add("opacity-90");
-    } else {
-        loginBtn.disabled = false;
-        loader.classList.add("hidden");
-        btnText.classList.remove("opacity-0", "translate-y-10");
-        loginBtn.classList.remove("opacity-90");
-    }
+function showMsg(m, c) {
+    const el = document.getElementById("message");
+    el.innerText = m;
+    el.className = `mt-8 text-center text-xs tech-font uppercase tracking-widest ${c}`;
 }
 
-function showMessage(text, type) {
-    const msgEl = document.getElementById("message");
-    msgEl.innerText = text;
-    // แยกสีตามสถานะ: แดง (Error), เขียว (Success) [cite: 24, 34, 43]
-    if (type === "success") {
-        msgEl.className = "mt-6 text-center text-sm font-medium py-3 px-4 rounded-xl text-green-600 bg-green-50 flex items-center justify-center";
-    } else {
-        msgEl.className = "mt-6 text-center text-sm font-medium py-3 px-4 rounded-xl text-red-500 bg-red-50 flex items-center justify-center";
-    }
+function resetBtn() {
+    const btn = document.getElementById("loginBtn");
+    const text = document.getElementById("btnText");
+    const loader = document.getElementById("loadingIcon");
+    btn.disabled = false;
+    text.innerText = "Execute Login";
+    loader.classList.add("hidden");
 }
 
-// รองรับการกด Enter [cite: 24]
-document.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') handleLogin();
-});
+document.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleLogin(); });
 </script>
 </body>
 </html>
